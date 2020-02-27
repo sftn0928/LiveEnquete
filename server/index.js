@@ -43,7 +43,6 @@ async function start() {
 
   function socketStart(server) {
     const io = require("socket.io").listen(server);
-    console.log(LiveChat);
     io.on("connection", socketEvent.socketConnect(LiveChat));
   }
 
