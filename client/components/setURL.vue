@@ -34,7 +34,7 @@
   .input-style input{
     height: 2em;
     width: 100%;
-    font-size: 20px;
+    font-size: calc(14px + 0.5vw);
     border: 1px #707070 solid;
     border-radius: 10px;
   }
