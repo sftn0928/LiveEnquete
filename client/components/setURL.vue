@@ -1,30 +1,17 @@
 <template>
   <div class="set-url">
-    <p>YouTube ライブ配信中のページURLを入力して下さい</p>
-    <input type="text" placeholder="URL" v-model="url" />
-    <button @click="start">始める</button>
+    <div class="message">
+      <p>YouTube ライブ配信中のページURLを入力して下さい</p>
+    </div>
+    <div class="input-style">
+      <input type="text" placeholder=" URL" />
+    </div>
+    <button class="button-style">始める</button>
   </div>
 </template>
-<script>
-import io from "socket.io-client";
 
-export default {
-  data() {
-    return {
-      url: "",
-      socket: ""
-    };
-  },
-  methods: {
-    start() {
-      this.socket.emit("setURL", this.url);
-    }
-  },
-  created() {
-    this.socket = io();
-  }
-};
-</script>
+<script></script>
+
 <style scoped>
 .set-url {
   height: 100vh;
@@ -33,6 +20,30 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-weight: 700;
+  font-weight: 400;
+  color: #707070;
+}
+.message {
+  font-size: 30px;
+}
+.input-style {
+  width: 50%;
+  margin: 10vh 0;
+}
+.input-style input {
+  height: 2em;
+  width: 100%;
+  font-size: 20px;
+  border-radius: 10px;
+}
+.button-style {
+  width: 8em;
+  height: 2.5em;
+  display: inline-block;
+  font-size: 20px;
+  background-color: #707070;
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
 }
 </style>
