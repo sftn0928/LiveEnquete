@@ -1,9 +1,19 @@
 <template>
-  <div class="">
-    channel URL
-    <input type="text" />
-    <button>Set</button>
+  <div class="set-url">
+    <p>YouTube ライブ配信中のページURLを入力して下さい</p>
+    <input type="text" placeholder="URL" />
+    <button>始める</button>
   </div>
 </template>
 <script></script>
-<style scoped></style>
+<style scoped>
+  .set-url{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+  }
+</style>
