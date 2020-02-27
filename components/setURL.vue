@@ -24,25 +24,28 @@
     color: #707070;
   }
   .message{
-    font-size: 30px;
+    font-size: calc(15px + 0.8vw);
+    margin: 0 10vw;
   }
   .input-style{
-    width: 50%;
+    width: calc(40% + 15vh);
     margin: 10vh 0;
   }
   .input-style input{
     height: 2em;
     width: 100%;
     font-size: 20px;
+    border: 1px #707070 solid;
     border-radius: 10px;
   }
   .button-style{
     width: 8em;
     height: 2.5em;
     display: inline-block;
-    font-size: 20px;
+    font-size: calc(14px + 0.5vw);
     background-color: #707070;
     color: #ffffff;
+    border-style: none;
     border-radius: 10px;
     cursor: pointer;
   }
