@@ -12,8 +12,8 @@
         </div>
       </div>
       <div class="add-btn">
-        <p class="plus" @click="addFrame">＋</p>
-      </div>
+      <p class="plus" @click="addFrame">＋</p>
+    </div>
     </div>
   </div>
 </template>
