@@ -9,15 +9,15 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
 .header-wrapper {
-  height: 85px;
+  height: $headerHeight;
   background-color: #707070;
 }
 
 .header-title {
   color: white;
-  line-height: 85px;
+  line-height: $headerHeight;
   margin-left: 20px;
 }
 
