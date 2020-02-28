@@ -1,12 +1,8 @@
 <template>
   <div class="set-url">
-    <div class="message">
-      <p>YouTube ライブ配信中のページURLを入力して下さい</p>
-    </div>
-    <div class="input-style">
-      <input type="text" placeholder=" URL" />
-    </div>
-    <button class="button-style">始める</button>
+    <p>YouTube ライブ配信中のページURLを入力して下さい</p>
+    <input type="text" placeholder=" URL" />
+    <button>始める</button>
   </div>
 </template>
 
@@ -14,7 +10,7 @@
 
 <style lang="scss" scoped>
 .set-url {
-  height: 100vh;
+  height: calc(100vh - #{$headerHeight});
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -22,31 +18,29 @@
   align-items: center;
   font-weight: 400;
   color: $textColor;
-}
-.message {
-  font-size: $fontSizeML;
-  margin: 0 10vw;
-}
-.input-style {
-  width: calc(40% + 15vh);
-  margin: 10vh 0;
+  p {
+    font-size: $fontSizeML;
+    text-align: center;
+    margin: 0 10%;
+  }
   input {
     height: 2em;
-    width: 100%;
+    width: calc(40% + 15vh);
+    margin: 10vh 0;
     font-size: $fontSizeMM;
     border: 1px $textColor solid;
     border-radius: 10px;
   }
-}
-.button-style {
-  width: 8em;
-  height: 2.5em;
-  display: inline-block;
-  font-size: $fontSizeMM;
-  background-color: $bottonColor;
-  color: #ffffff;
-  border-style: none;
-  border-radius: 10px;
-  cursor: pointer;
+  button {
+    width: 8em;
+    height: 2.5em;
+    display: inline-block;
+    font-size: $fontSizeMM;
+    background-color: $bottonColor;
+    color: #ffffff;
+    border-style: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
 }
 </style>
