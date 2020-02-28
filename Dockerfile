@@ -1,5 +1,9 @@
-FROM node:10.19.0-alpine3.11
-RUN apk update && \
-  apk add git && \
-  npm install -g npm
-EXPOSE 8080
+ARG NODE_VERSION
+
+FROM node:${NODE_VERSION}-alpine
+
+RUN apk update \
+  && apk upgrade \
+  && apk add --no-cache bash \
+  && npm install npm -g
+RUN npm install -g nodemon
