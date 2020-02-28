@@ -3,6 +3,11 @@ const app = express();
 const mysql = require("mysql");
 const redis = require("redis");
 
+const UserController = require("./Controller/user");
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // const connectDB = mysql.createConnection({
 //   host: "mysql",
 //   port: 3306,
@@ -36,8 +41,9 @@ const redis = require("redis");
 // // 切断
 // client.quit();
 
-app.get("/", function(req, res) {
-  res.send("HelloWorld");
+// app.get("/", UserController.signUp);
+app.get("/", (req, res) => {
+  console.log(req.body.data);
 });
 
 module.exports = {
