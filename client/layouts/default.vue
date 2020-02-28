@@ -9,10 +9,10 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
 .header-wrapper {
   height: 85px;
-  background-color: #707070;
+  background-color: $textColor;
 }
 
 .header-title {
