@@ -19,15 +19,35 @@ export default {};
   align-items: center;
   justify-content: center;
   font-family: 'Noto Sans JP';
-  font-weight: 400;
   h1{
     color: $textColor;
-    font-size: $fontSizeML;
+    font-size: $fontSizeMM;
     text-align: center;
-    margin: 0 10vw;
+    font-weight: 400;
+    margin: 0 10%;
   }
-}
-.description{
-
+  a{
+    width: 19em;
+    height: 2.5em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $fontSizeMM;
+    font-weight: 400;
+    text-decoration: none;
+    background-color: $bottonColor;
+    color: #ffffff;
+    border-style: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10vh 0;
+  }
+  p{
+    font-size: $fontSizeMM;
+    color: $textColor;
+    text-align: center;
+    font-weight: 400;
+    margin: 0 10%;
+  }
 }
 </style>
