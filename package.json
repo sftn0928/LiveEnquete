@@ -5,7 +5,7 @@
   "author": "ASK",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "dev": "cross-env NODE_ENV=development NUXT_HOST=0.0.0.0 nodemon --legacy-watch server/index.js --watch server",
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=production node server/index.js",
     "generate": "nuxt generate",
@@ -16,8 +16,6 @@
     "@nuxtjs/pwa": "^3.0.0-0",
     "@nuxtjs/style-resources": "^1.0.0",
     "bcrypt": "^4.0.0",
-    "bookshelf": "^1.1.0",
-    "bookshelf-virtuals-plugin": "^0.1.1",
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
     "express-validator": "^6.4.0",

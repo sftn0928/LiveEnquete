@@ -1,9 +1,21 @@
 const express = require("express");
 const app = express();
-const mysql = require("mysql");
 const redis = require("redis");
 
-const UserController = require("./Controller/user");
+// const UserController = require("./Controller/user");
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb://mongo:27017/User_db", { useNewUrlParser: true });
+
+const db = mongoose.connection;
+db.once("open", () => {
+  console.log("Mongo connect");
+});
+
+const userSchema = mongoose.Schema({
+  name: String,
+  email: String
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

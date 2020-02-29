@@ -1,9 +1,7 @@
 ARG NODE_VERSION
 
-FROM node:${NODE_VERSION}-alpine
-
-RUN apk update \
-  && apk upgrade \
-  && apk add --no-cache bash \
-  && npm install npm -g
+FROM node:${NODE_VERSION}
+RUN apt-get update && \
+  apt-get install -y vim less
+RUN npm install npm -g
 RUN npm install -g nodemon
