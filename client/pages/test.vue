@@ -51,17 +51,17 @@ export default {
     color: $textColor;
   }
 
-  .frame-wraper {
+  .frame-wrapper {
     display: flex;
+    width: calc(40% + 15vh);
     flex-direction: column;
-    flex-wrap: wrap;
-    max-height: 500px;
-    height: 500px;
+    margin: 10vh 0
   }
   .comment-frame {
     height: 2em;
+    width: 100%;
     display: block;
-    margin: 2vh 0;
+    margin: 1vh 0;
     font-size: $fontSizeMM;
     color: $textColor;
     border: 1px $textColor solid;
@@ -75,7 +75,7 @@ export default {
       height: 1.5em;
       width: 1.5em;
       font-size: $fontSizeMM;
-      margin: 0.35em 0 0 -2em;  
+      margin: calc(1vh + 0.3em) 0 0 -2em;  
       border-radius: 50%;
       background-color: #eeee;
       cursor: pointer;
@@ -93,10 +93,6 @@ export default {
     }
   }
 
-  .new-frame {
-    margin-top: 0;
-  }
-
   .add-btn {
     height: 2em;
     display: block;
@@ -104,6 +100,7 @@ export default {
     border-style: none;
     border-radius: 10px;
     background-color: #eeeeee;
+    margin: 1vh 0;
     &:hover {
           background-color: #9999;
           transition: 200ms;
