@@ -9,7 +9,8 @@
           :value="val"
           class="comment-frame new-frame"
         />
-        <div class="delete-btn" v-bind="deleteBtn" @click="deleteInput(index)">
+        <div class="delete-btn" :class="{'hide' : isHide }"
+         @click="deleteInput(index)">
           <p>×</p>
         </div>
       </div>
@@ -24,8 +25,14 @@
 export default {
   data() {
     return {
-      items: [""]
+      items: [""],
     };
+  },
+
+  computed: {
+    isHide() {
+      return this.items.length >= 3 ? false : true;
+    }
   },
 
   methods: {
@@ -37,16 +44,17 @@ export default {
     },
     deleteInput(index) {
       this.items.splice(index, 1);
-    },
-    hideDeleteBtn() {
-      console.log("a")
     }
-
   }
-};
+}
+
 </script>
 
 <style lang="scss" scoped>
+.hide {
+  display: none;
+}
+
 .comment-frame-wrapper {
   width: 100%;
   display: flex;
@@ -80,7 +88,6 @@ export default {
   display: flex;
 
   .delete-btn {
-    // display: none;
     height: 1.5em;
     width: 1.5em;
     font-size: $fontSizeMM;

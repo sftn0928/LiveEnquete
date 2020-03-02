@@ -22,5 +22,4 @@
   line-height: $headerHeight;
   margin-left: 20px;
 }
-
 </style>
