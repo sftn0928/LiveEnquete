@@ -6,7 +6,8 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+// import axios from "axios";
+import myAxios from "~/plugins/myAxios";
 
 export default {
   data() {
@@ -17,22 +18,13 @@ export default {
   },
   methods: {
     submitToServer() {
-      axios
-        .get("/api", {
-          email: this.email,
-          pass: this.pass
-        })
-        .then(val => {
-          $router.push("/");
-        })
-        .catch(e => {
-          if (e === "email") {
-            console.log("email is none");
-          }
-          if (e === "pass") {
-            console.log("pass is missing");
-          }
-        });
+      let obj = {
+        email: this.email,
+        pass: this.pass
+      };
+      console.log(obj);
+      myAxios.post("/api/user", obj);
+
       console.log("axios");
     }
   }

@@ -2,14 +2,6 @@
   <div class="comment-frame-wrapper">
     <p class="comment">取得するコメント</p>
     <div class="frame-wrapper">
-      <input type="text" name="comment1" value="" class="comment-frame" />
-      <input
-        type="text"
-        name="comment2"
-        value=""
-        class="comment-frame"
-        v-model="item"
-      />
       <div v-for="(val, index) in items" :key="index" class="add-frame-wrapper">
         <input
           type="text"
@@ -17,7 +9,7 @@
           :value="val"
           class="comment-frame new-frame"
         />
-        <div class="delete-btn" @click="changeInput">
+        <div class="delete-btn" @click="deleteInput(index)">
           <p>×</p>
         </div>
       </div>
@@ -32,8 +24,7 @@
 export default {
   data() {
     return {
-      item: "",
-      items: []
+      items: [""]
     };
   },
 
@@ -42,6 +33,9 @@ export default {
       this.items.push(this.item);
     },
     changeInput(event, index) {
+      this.items.splice(index, 1, event.target.value);
+    },
+    deleteInput(index) {
       this.items.splice(index, 1);
     }
   }
