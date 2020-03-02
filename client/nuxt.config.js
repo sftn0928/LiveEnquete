@@ -23,8 +23,6 @@ module.exports = {
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" }
     ]
   },
-  srcDir: "./client/",
-  serverMiddleware: ["~~/api/"],
   /*
    ** Customize the progress-bar color
    */
@@ -58,6 +56,13 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
+  devServer: {
+    proxy: {
+      "/api/": {
+        target: "http://server:8000"
+      }
+    }
+  },
   /*
    ** Build configuration
    */
