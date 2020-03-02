@@ -10,7 +10,9 @@
     </div>
 </template>
 
-<script></script>
+<script>
+export default {};
+</script>
 
 <style lang="scss">
 .login-page{
@@ -37,7 +39,7 @@
 .login-page-contents{
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     justify-content: center;
     width: calc(40% + 15vh);
     p{

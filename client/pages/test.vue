@@ -1,7 +1,7 @@
 <template>
   <div class="comment-frame-wrapper">
-    <p class="comment">取得するコメント</p>
     <div class="frame-wrapper">
+      <p class="comment">取得するコメント</p>
       <input type="text" name="comment1" value="" class="comment-frame">
       <input type="text" name="comment2" value="" class="comment-frame" v-model="item" >
       <div v-for="(val, index) in items" :key="index" class="add-frame-wrapper">
@@ -41,37 +41,43 @@ export default {
 
 <style lang="scss" scoped>
   .comment-frame-wrapper {
-      margin: 50px 0 0 100px;
-      height: 200px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .comment {
-        font-size: $fontSizeML;
-      }
+    font-size: $fontSizeMM;
+    color: $textColor;
+  }
 
-  .frame-wraper {
-      display: flex;
-      // flex-direction: column;
-      flex-flow: column wrap;
+  .frame-wrapper {
+    display: flex;
+    width: calc(40% + 15vh);
+    flex-direction: column;
+    margin: 10vh 0
   }
   .comment-frame {
-      display: block;
-      height: 72px;
-      width: 460px;
-      border-radius: 10px;
-      margin: 20px 0;
+    height: 2em;
+    width: 100%;
+    display: block;
+    margin: 1vh 0;
+    font-size: $fontSizeMM;
+    color: $textColor;
+    border: 1px $textColor solid;
+    border-radius: 10px;
   }
 
   .add-frame-wrapper {
     display: flex;
-  
 
     .delete-btn {
-      margin: 18px 0 0 -50px;
+      height: 1.5em;
+      width: 1.5em;
+      font-size: $fontSizeMM;
+      margin: calc(1vh + 0.3em) 0 0 -2em;  
       border-radius: 50%;
       background-color: #eeee;
-      height: 40px;
-      width: 40px;
       cursor: pointer;
 
       &:hover {
@@ -81,33 +87,30 @@ export default {
     }
 
     p {
-      font-size: 1.3em;
+      font-size: 1em;
       text-align: center;
-      line-height: 40px;
+      line-height: 1.5em;
     }
   }
 
-  .new-frame {
-    margin-top: 0;
-  }
-
   .add-btn {
-      height: 72px;
-      width: 465px;
-      border-radius: 10px;
-      background-color: #eeee;
+    height: 2em;
+    display: block;
+    font-size: $fontSizeMM;
+    border-style: none;
+    border-radius: 10px;
+    background-color: #eeeeee;
+    margin: 1vh 0;
+    &:hover {
+          background-color: #9999;
+          transition: 200ms;
+      }
   }
 
   .plus {
       text-align: center;
-      line-height: 72px;
-      font-size: 3em;
+      line-height: 2em;
+      font-size: $fontSizeMM;
       cursor: pointer;
-
-      &:hover {
-          background-color: #9999;
-          border-radius: 10px;
-          transition: 200ms;
-      }
   }
 </style>
