@@ -1,26 +1,25 @@
-const User = require("../models/user");
-const mongoose = require("mongoose");
-const _ = require("lodash");
-const { Maybe, Either } = require("../library/monads");
-const passport = require("passport");
-const { checkSchema, validationResult } = require("express-validator");
+const User = require('../models/User');
+const mongoose = require('mongoose');
+const _ = require('lodash');
+const { Maybe, Either } = require('../library/monads');
+const passport = require('passport');
+const { checkSchema, validationResult } = require('express-validator');
 
+console.log(typeof checkSchema);
 const isNext = (next, monad, obj) => {
   return _.isEmpty(next) ? monad(obj) : next();
 };
 
 const flashMonad = (key, monad, obj, message) => {
-  if (typeof obj === "object") {
+  if (typeof obj === 'object') {
     obj.req.flash(key, message);
     isNext(obj.next, monad, obj);
   }
 };
 
-const flashLeft = _.curry(flashMonad, "error", Maybe.nothing);
-const flashRight = _.curry(flashMonad, "success", Maybe.just);
-let truePass = (req, res, next, user) => {
-  user.passwordComparison(req.body.password).then();
-};
+const flashLeft = _.curry(flashMonad, 'error', Maybe.nothing);
+const flashRight = _.curry(flashMonad, 'success', Maybe.just);
+
 let getUserParams = req => {
   return {
     name: req.body.name,
@@ -39,7 +38,7 @@ module.exports = {
     if (req.skip) next();
 
     let newUser = new User(getUserParams(req));
-
+    console.log(newUser);
     User.register(newUser, req.body.password, (error, user) => {
       let obj = {
         error,
@@ -47,19 +46,21 @@ module.exports = {
         req,
         next
       };
+      console.log(error, user);
       isUser(
         obj,
-        `${user.name}'s account created Success`,
-        `Failed to create user account because: ${error.message}`
+        `${user}'s account created Success`,
+        `Failed to create user account because: ${error}`
       );
+      res.send('success');
     });
   },
   show(req, res, next) {
+    console.log(req.params.id);
     let userParams = req.params.id;
     User.findById(userParams)
       .then(user => {
-        res.locals.user = user;
-        next();
+        res.send(user);
       })
       .catch(err => {
         console.log(`Error fetching user by id: ${err.message}`);
@@ -95,34 +96,66 @@ module.exports = {
         next();
       });
   },
-  authenticate: passport.authenticate("local", {
-    failureFlash: "Failed to Login",
-    successFlash: "Logged in"
+  authenticate: passport.authenticate('local', {
+    failureFlash: 'Failed to Login',
+    successFlash: 'Logged in'
   }),
   checkValidate: checkSchema({
     name: {
-      in: ["body"],
+      in: ['body'],
       isString: true,
       notEmpty: true,
-      errorMessage: "不正な名前です"
+      errorMessage: '不正な名前です'
     },
     password: {
       isLength: {
-        errorMessage: "Password should be at least 7 chars long",
+        errorMessage: 'Password should be at least 7 chars long',
         options: { min: 7 }
       }
     },
     email: {
       trim: true,
       isEmail: {
-        errorMessage: "不正なメールアドレスです。"
+        errorMessage: '不正なメールアドレスです。'
       },
-      isLowercase
+      isLowercase: true
     }
   }),
   logout(req, res, next) {
     req.logout();
-    req.flash("success", "you have been logged out!");
+    req.flash('success', 'you have been logged out!');
     next();
+  },
+  verifyToken(req, res, next) {
+    let token = req.query.token;
+    if (token) {
+      User.findOne({ apiToken: token })
+        .then(user => {
+          if (user) next();
+          else next(new Error(error.message));
+        })
+        .catch(error => {
+          next(new Error(error.message));
+        });
+    } else {
+      next(new Error('Invalid API token!!'));
+    }
   }
+  // csrfCreate(req, res) {
+  //   let secret = tokens.secretSync();
+  //   let token = tokens.create(secret);
+  //   req.session._csrf = secret;
+  //   res.cookie('_csrf', token);
+  //   console.log('getlogin');
+  // },
+  // csrfCompare(req, res) {
+  //   let secret = req.session._csrf;
+  //   let token = req.cookies._csrf;
+  //   console.log('postlogin');
+  //   if (tokens.verify(secret, token) === false) {
+  //     throw new Error('Invalid Token');
+  //   }
+  //   delete req.session._csrf;
+  //   res.clearCookie('_csrf');
+  // }
 };

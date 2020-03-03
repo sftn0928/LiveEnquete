@@ -1,6 +1,7 @@
-const mongoose = require("mongoose"),
-  { Schema } = require("mongoose"),
-  passportLocalMongoose = require("passport-local-mongoose");
+const mongoose = require('mongoose'),
+  { Schema } = require('mongoose'),
+  passportLocalMongoose = require('passport-local-mongoose');
+const randToken = require('rand-token');
 
 const userSchema = new Schema({
   name: {
@@ -20,11 +21,18 @@ const userSchema = new Schema({
   channelUrl: {
     type: String
   },
-  slots: [{ type: mongoose.Schema.Types.ObjectId, ref: "Slot" }]
+  slots: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Slot' }]
 });
 
 userSchema.plugin(passportLocalMongoose, {
-  usernameField: "email"
+  usernameField: 'email',
+  hashField: 'password'
 });
 
-module.exports = mongoose.model("User", userSchema);
+userSchema.pre('save', function(next) {
+  let user = this;
+  if (!user.apiToken) user.apiToken = randToken.generate(16);
+  next();
+});
+
+module.exports = mongoose.model('User', userSchema);

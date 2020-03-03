@@ -46,7 +46,8 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     "@nuxtjs/pwa",
-    "@nuxtjs/style-resources"
+    "@nuxtjs/style-resources",
+    "@nuxtjs/proxy"
   ],
   styleResources: {
     scss: ["~/assets/scss/variable.scss"]
@@ -55,11 +56,20 @@ module.exports = {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
-  devServer: {
-    proxy: {
-      "/api/": {
-        target: "http://server:8000"
+  axios: {
+    browserBaseURL: process.env.BASE_APP_URL || "/",
+    requestInterceptor(config, { store }) {
+      if (store.state.csrfToken) {
+        config.headers.common["x-csrf-token"] = store.state.csrfToken;
+      }
+      return config;
+    }
+  },
+  proxy: {
+    "/api": {
+      target: "http://server:3001",
+      pathRewrite: {
+        "^/api": "/"
       }
     }
   },
