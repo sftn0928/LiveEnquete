@@ -41,11 +41,12 @@ services:
     ports:
       - '27017:27017'
       - '28017:28017'
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: pass
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: root
+    #   MONGO_INITDB_ROOT_PASSWORD: pass
     volumes:
       - 'mongo:/data/db'
+      - './db/mongo_config:/data/configdb'
   redis:
     image: 'redis:latest'
     ports:
