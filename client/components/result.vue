@@ -1,10 +1,7 @@
 <template>
-  <div>
-    retult
-  </div>
+  <div></div>
 </template>
 <script>
-// import Youtube from "youtube-live-chat";
 export default {
   data() {
     return {};

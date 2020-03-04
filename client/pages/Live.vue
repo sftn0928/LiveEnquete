@@ -2,7 +2,7 @@
   <div>
     <button @click="isCollect = !isCollect">StartCollect! 10秒</button>
     <button @click="isSetURL = !isSetURL">setURL</button>
-    <setURLComponent v-if="isSetURL === false" />
+    <setURLComponent v-if="isSetURL === false" @setURL="setURL($event)" />
     <collectComponent v-if="isCollect === false" />
     <resultComponent v-if="isCollect" />
   </div>
@@ -20,8 +20,15 @@ export default {
   data() {
     return {
       isCollect: false,
-      isSetURL: false
+      isSetURL: false,
+      URL: ""
     };
+  },
+  methods: {
+    setURL(input) {
+      this.isSetURL = true;
+      this.URL = input;
+    }
   }
 };
 </script>

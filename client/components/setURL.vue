@@ -1,12 +1,20 @@
 <template>
   <div class="set-url">
     <p>YouTube ライブ配信中のページURLを入力して下さい</p>
-    <input type="text" placeholder=" URL" />
-    <button>始める</button>
+    <input type="text" placeholder="URL" ref="input" />
+    <button @click="setURL">始める</button>
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  methods: {
+    setURL() {
+      this.$emit("setURL", this.$refs.input.value);
+    }
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 .set-url {

@@ -12,7 +12,7 @@ const isNext = (next, monad, obj) => {
 
 const flashMonad = (key, monad, obj, message) => {
   if (typeof obj === 'object') {
-    obj.req.flash(key, message);
+    obj.res.cookie()
     isNext(obj.next, monad, obj);
   }
 };

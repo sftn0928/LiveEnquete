@@ -1,14 +1,15 @@
 <template>
   <div>
-    <button @click="setCollection">setData</button>
-    <input type="text" v-model="collectData" />
-    <ul>
-      <li v-for="(data, index) in collection" :key="index">{{ data }}</li>
-    </ul>
+    <commentFlame />
+    <button @click="setCollection">スタート</button>
   </div>
 </template>
 <script>
+import commentFlame from "~/components/commentFrame.vue";
 export default {
+  components: {
+    commentFlame
+  },
   data() {
     return {
       collectData: "",
