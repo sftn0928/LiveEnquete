@@ -9,9 +9,10 @@
 <script>
 export default {
   methods: {
-    setURL() {
+     setURL() {
       this.$store.commit("setLiveURL", this.$refs.inputURL.value);
       console.log(this.$store.getters.liveURL);
+      this.$emit('finishSetURL')
     }
   }
 };
