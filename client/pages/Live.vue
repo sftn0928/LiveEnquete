@@ -19,12 +19,8 @@ export default {
   data() {
     return {
       isSetURL: false,
-<<<<<<< HEAD
-      socket: io(),
-=======
       isCollect: true,
       socket: "",
->>>>>>> 3494de7870a9724a6666b6a9d6556d8f06929bf0
       liveId: ""
     };
   },

@@ -2,13 +2,8 @@
   <div class="set-url">
     <p>YouTube ライブ配信中のページURLを入力して下さい</p>
     <input type="text" placeholder=" URL" ref="inputURL" />
-<<<<<<< HEAD
     <div class="error-message">{{ error }}</div>
     <button @click="setURL">始める</button>
-=======
-    {{ error }}
-    <button @click="finishSetURL">始める</button>
->>>>>>> 3494de7870a9724a6666b6a9d6556d8f06929bf0
   </div>
 </template>
 
