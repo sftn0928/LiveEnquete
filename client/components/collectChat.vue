@@ -1,17 +1,17 @@
 <template>
   <div>
-    <button @click="setCollection">setData</button>
-    <input type="text" v-model="collectData" />
-    <ul>
-      <li v-for="(data, index) in collection" :key="index">{{ data }}</li>
-    </ul>
+    <commentFlame />
+    <resultComponent />
   </div>
 </template>
 <script>
-import commentFrameComponent from "~/components/commentFrame";
+import resultComponent from "@/components/result";
+import commentFlame from "@/components/commentFlame";
+
 export default {
   components: {
-    commentFrameComponent
+    resultComponent,
+    commentFlame
   },
   data() {
     return {

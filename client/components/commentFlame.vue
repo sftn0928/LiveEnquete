@@ -9,8 +9,11 @@
           :value="val"
           class="comment-frame new-frame"
         />
-        <div class="delete-btn" :class="{'hide' : isHide }"
-         @click="deleteInput(index)">
+        <div
+          class="delete-btn"
+          :class="{ hide: isHide }"
+          @click="deleteInput(index)"
+        >
           <p>×</p>
         </div>
       </div>
@@ -25,7 +28,7 @@
 export default {
   data() {
     return {
-      items: [""],
+      items: [""]
     };
   },
 
@@ -46,8 +49,7 @@ export default {
       this.items.splice(index, 1);
     }
   }
-}
-
+};
 </script>
 
 <style lang="scss" scoped>
@@ -62,7 +64,6 @@ export default {
 }
 
 .comment {
-  margin: 30px 0 0 100px;
   font-size: $fontSizeMM;
   color: $textColor;
 }

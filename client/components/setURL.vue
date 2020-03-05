@@ -1,19 +1,21 @@
 <template>
   <div class="set-url">
     <p>YouTube ライブ配信中のページURLを入力して下さい</p>
-    <input type="text" placeholder=" URL" />
-    <button  @click="doAction">始める</button>
+    <input type="text" placeholder=" URL" ref="inputURL" />
+    <button @click="setURL">始める</button>
   </div>
 </template>
 
 <script>
 export default {
   methods: {
-    doAction() {
+     setURL() {
+      this.$store.commit("setLiveURL", this.$refs.inputURL.value);
+      console.log(this.$store.getters.liveURL);
       this.$emit('finishSetURL')
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

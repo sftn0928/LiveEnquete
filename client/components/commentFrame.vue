@@ -104,29 +104,33 @@ export default {
   }
 
   p {
-    font-size: 1em;
+    font-size: 1.3em;
     text-align: center;
-    line-height: 1.5em;
+    line-height: 40px;
   }
 }
 
+.new-frame {
+  margin-top: 0;
+}
+
 .add-btn {
-  height: 2em;
-  display: block;
-  font-size: $fontSizeMM;
-  border-style: none;
+  height: 72px;
+  width: 465px;
   border-radius: 10px;
-  background-color: #eeeeee;
-  margin: 1vh 0;
+  background-color: #eeee;
+}
+
+.plus {
+  text-align: center;
+  line-height: 72px;
+  font-size: 3em;
+  cursor: pointer;
+
   &:hover {
     background-color: #9999;
+    border-radius: 10px;
     transition: 200ms;
-  }
-  p {
-    text-align: center;
-    line-height: 2em;
-    font-size: $fontSizeMM;
-    cursor: pointer;
   }
 }
 </style>
