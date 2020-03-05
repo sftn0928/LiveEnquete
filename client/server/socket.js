@@ -15,9 +15,9 @@ exports.socketConnect = LiveChat => socket => {
       console.log(reason);
     });
     Live.on("comment", comment => {
-      console.log(comment.message[0].text);
       try {
-        socket.emit("emitComment", comment.message);
+        console.log(comment.message[0].text);
+        socket.emit("emitComment", comment.message[0].text);
       } catch (error) {
         console.log(commit.message, "this is 無言のスパチャ");
       }
@@ -26,6 +26,7 @@ exports.socketConnect = LiveChat => socket => {
   });
 
   socket.on("disconnect", () => {
+    console.log("disconnect");
     if (Live !== undefined) {
       if (typeof Live.stop === "function") {
         Live.stop();

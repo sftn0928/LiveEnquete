@@ -1,6 +1,6 @@
 <template>
   <div>
-    <commentFrame />
+    <commentFrame @setCollect="setCollect($event)" ref="comment" />
     <resultComponent />
     <timeSet />
   </div>
@@ -16,22 +16,15 @@ export default {
     commentFrame,
     timeSet
   },
-  props: {
-    socket: Object
-  },
   data() {
     return {
-      collectData: "",
       collection: []
     };
   },
   methods: {
-    setCollection() {
-      this.collection.push(this.collectData);
+    setCollect(event) {
+      console.log(this.$refs.comment, event);
     }
-  },
-  mounted() {
-    this.socket.on("emitComment", comment => {});
   }
 };
 </script>

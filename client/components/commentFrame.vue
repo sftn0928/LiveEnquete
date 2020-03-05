@@ -1,7 +1,7 @@
 <template>
   <div class="comment-frame-wrapper">
-    <p class="comment">取得するコメント</p>
     <div class="frame-wrapper">
+      <p class="comment">取得するコメント</p>
       <div v-for="(val, index) in items" :key="index" class="add-frame-wrapper">
         <input
           type="text"
@@ -25,13 +25,16 @@
 </template>
 
 <script>
+import _ from "lodash";
 export default {
   data() {
     return {
       items: [""]
     };
   },
-
+  props: {
+    choiceItem: Array
+  },
   computed: {
     isHide() {
       return this.items.length >= 3 ? false : true;
@@ -47,6 +50,14 @@ export default {
     },
     deleteInput(index) {
       this.items.splice(index, 1);
+    }
+  },
+  watch: {
+    items() {
+      this.$emit("setCollect", this.items);
+    },
+    choiceItem() {
+      this.items = _.clone(this.choiceItem);
     }
   }
 };
@@ -64,9 +75,9 @@ export default {
 }
 
 .comment {
-  margin: 30px 0 0 100px;
   font-size: $fontSizeMM;
   color: $textColor;
+  text-align: left;
 }
 
 .frame-wrapper {
