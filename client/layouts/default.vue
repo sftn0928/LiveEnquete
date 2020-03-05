@@ -27,8 +27,8 @@
   background-color: #707070;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   h1{
-    line-height: $headerHeight;
     color: white;
     font-size: 18px;
     font-weight: 700;
@@ -37,7 +37,6 @@
   }
   a{
     text-decoration: none;
-    line-height: $headerHeight;
     color: white;
     font-size: 16px;
     font-weight: 400;

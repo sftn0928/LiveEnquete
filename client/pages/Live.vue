@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       isSetURL: false,
-      socket: {},
+      socket: io(),
       liveId: ""
     };
   },

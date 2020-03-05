@@ -1,24 +1,26 @@
 <template>
   <div class="comment-frame-wrapper">
     <p class="comment">取得するコメント</p>
-    <div class="frame-wrapper">
-      <div v-for="(val, index) in items" :key="index" class="add-frame-wrapper">
-        <input
-          type="text"
-          @change="changeInput($event, index)"
-          :value="val"
-          class="comment-frame new-frame"
-        />
-        <div
-          class="delete-btn"
-          :class="{ hide: isHide }"
-          @click="deleteInput(index)"
-        >
-          <p>×</p>
+    <div class="coment-container">
+      <div class="frame-wrapper">
+        <div v-for="(val, index) in items" :key="index" class="add-frame-wrapper">
+          <input
+            type="text"
+            @change="changeInput($event, index)"
+            :value="val"
+            class="comment-frame new-frame"
+          />
+          <div
+            class="delete-btn"
+            :class="{ hide: isHide }"
+            @click="deleteInput(index)"
+          >
+            <p>×</p>
+          </div>
         </div>
-      </div>
-      <div class="add-btn">
-        <p @click="addFrame">＋</p>
+        <div class="add-btn">
+          <p @click="addFrame">＋</p>
+        </div>
       </div>
     </div>
   </div>
@@ -60,19 +62,25 @@ export default {
 .comment-frame-wrapper {
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  margin: 10vh 0;
 }
 
 .comment {
   font-size: $fontSizeMM;
   color: $textColor;
+  margin-left: calc(30% - 7.5vh);
+}
+
+.coment-container {
+    display: flex;
+    justify-content: center;
 }
 
 .frame-wrapper {
   display: flex;
   width: calc(40% + 15vh);
   flex-direction: column;
-  margin: 10vh 0;
 }
 
 .comment-frame {

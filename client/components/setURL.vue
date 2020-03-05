@@ -2,7 +2,7 @@
   <div class="set-url">
     <p>YouTube ライブ配信中のページURLを入力して下さい</p>
     <input type="text" placeholder=" URL" ref="inputURL" />
-    {{ error }}
+    <div class="error-message">{{ error }}</div>
     <button @click="setURL">始める</button>
   </div>
 </template>
@@ -44,7 +44,7 @@ export default {
   input {
     height: 2em;
     width: calc(40% + 15vh);
-    margin: 10vh 0;
+    margin-top: 10vh;
     font-size: $fontSizeMM;
     border: 1px $textColor solid;
     border-radius: 10px;
@@ -59,6 +59,11 @@ export default {
     border-style: none;
     border-radius: 10px;
     cursor: pointer;
+    margin: 10vh 0;
   }
+}
+.error-message{
+  color: red;
+  font-size: $fontSizeMM;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="timer-container">
     <div class="select-time">
         <p>今から</p>
         <select class="minute">
@@ -33,16 +33,17 @@ export default {};
 </script>
 
 <style lang="scss">
-.container{
+.timer-container{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 10vh 0;
 }
 
 .select-time{
     display: flex;
     color: $textColor;
-    margin: 10vh 0;
+    margin-bottom: 10vh;
     p{
         line-height: 1.5em;
         font-size: $fontSizeMM;

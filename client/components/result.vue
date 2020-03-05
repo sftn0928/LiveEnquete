@@ -23,7 +23,7 @@ export default {
   mounted() {
     setInterval(() => {
       this.time++;
-    }, 100);
+    }, 1000);
   },
   computed: {
     chartDataCom() {
