@@ -2,17 +2,25 @@
   <div class="set-url">
     <p>YouTube ライブ配信中のページURLを入力して下さい</p>
     <input type="text" placeholder=" URL" ref="inputURL" />
+    {{ error }}
     <button @click="setURL">始める</button>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      error: ""
+    };
+  },
   methods: {
-     setURL() {
-      this.$store.commit("setLiveURL", this.$refs.inputURL.value);
-      console.log(this.$store.getters.liveURL);
-      this.$emit('finishSetURL')
+    setURL() {
+      let test = this.$store.commit("setLiveURL", this.$refs.inputURL.value);
+      console.log(this.$store.getters.liveId);
+      this.$store.getters.liveId
+        ? this.$emit("finishSetURL")
+        : (this.error = "無効なURLです。");
     }
   }
 };

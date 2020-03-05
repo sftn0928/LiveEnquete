@@ -11,9 +11,8 @@ export const mutations = {
     state.csrfToken = csrfToken;
   },
   setLiveURL(state, URL) {
-    const parseURL = URL.match(/watch\?v=([A-Za-z0-9/-]{11})/)[1];
-    state.liveURL = parseURL;
-    return parseURL;
+    const parseURL = URL.match(/watch\?v=([A-Za-z0-9/-]{11})/);
+    state.liveURL = Lang.isNull(parseURL) ? false : parseURL[1];
   }
 };
 

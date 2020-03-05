@@ -31,7 +31,7 @@ export default {
     }
   },
   mounted() {
-    socket.on("emitComment", comment => {});
+    this.socket.on("emitComment", comment => {});
   }
 };
 </script>
