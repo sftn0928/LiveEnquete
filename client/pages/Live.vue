@@ -1,36 +1,39 @@
 <template>
   <div>
-    <setURLComponent  v-if="isSetURL === false" v-on:finishSetURL="hideSetURL" />
-    <resultComponent v-if="isCollect" />
-    <button @click="isCollect = !isCollect">StartCollect! 10秒</button>
-    <button @click="isSetURL = !isSetURL">setURL</button>
-    <collectComponent v-if="isCollect === false" :socket="socket" />
+    <setURLComponent v-if="isSetURL === false" @finishSetURL="hideSetURL" />
+    <collectComponent v-if="isSetURL" :socket="socket" />
   </div>
 </template>
 <script>
 import collectComponent from "~/components/collectChat";
 import setURLComponent from "~/components/setURL";
 import io from "socket.io-client";
+import Lang from "lodash/lang";
 export default {
   components: {
     collectComponent,
-    resultComponent,
-    setURLComponent,
+    setURLComponent
   },
   data() {
     return {
       isSetURL: false,
-      isCollect: false,
-      socket: ""
+      socket: {},
+      LiveId: ""
     };
   },
-  methods:{
-    hideSetURL(){
+  methods: {
+    hideSetURL() {
+      this.LiveId = this.$store.getters.liveId;
       this.isSetURL = !this.isSetURL;
     }
   },
   mounted() {
     this.socket = io();
+  },
+  watch: {
+    isSetURL() {
+      const Id = Lang.isEmpty(LiveId) ? "" : { liveId: this.liveId };
+    }
   }
 };
 </script>
