@@ -9,10 +9,6 @@
   </div>
 </template>
 <script>
-import Vue from "vue";
-import chartList from "vue-chartist";
-Vue.use(chartList);
-
 export default {
   data() {
     return {

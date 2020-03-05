@@ -2,19 +2,22 @@
   <div>
     <commentFlame />
     <resultComponent />
+    <timeSet />
   </div>
 </template>
 <script>
 import resultComponent from "@/components/result";
 import commentFlame from "@/components/commentFrame";
+import timeSet from "@/components/timeSet";
 
 export default {
   components: {
     resultComponent,
-    commentFlame
+    commentFlame,
+    timeSet
   },
   props: {
-    socket
+    socket: Object
   },
   data() {
     return {

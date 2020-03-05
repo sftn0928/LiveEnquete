@@ -18,9 +18,9 @@ export const mutations = {
 };
 
 export const getters = {
-  liveURL: state => state.liveURL,
-  pageURL: state => state.liveURL,
-  isPageURL: state => !Lang.isEmpty(state.isPageURL)
+  liveId: state => state.liveURL,
+  pageId: state => state.liveURL,
+  isPageId: state => !Lang.isEmpty(state.isPageURL)
 };
 
 export const actions = {
