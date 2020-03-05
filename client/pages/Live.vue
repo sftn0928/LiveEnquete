@@ -5,6 +5,7 @@
   </div>
 </template>
 <script>
+import resultComponent from "~/components/result";
 import collectComponent from "~/components/collectChat";
 import setURLComponent from "~/components/setURL";
 import io from "socket.io-client";
