@@ -9,8 +9,11 @@
           :value="val"
           class="comment-frame new-frame"
         />
-        <div class="delete-btn" :class="{'hide' : isHide }"
-         @click="deleteInput(index)">
+        <div
+          class="delete-btn"
+          :class="{ hide: isHide }"
+          @click="deleteInput(index)"
+        >
           <p>×</p>
         </div>
       </div>
@@ -25,7 +28,7 @@
 export default {
   data() {
     return {
-      items: [""],
+      items: [""]
     };
   },
 
@@ -46,8 +49,7 @@ export default {
       this.items.splice(index, 1);
     }
   }
-}
-
+};
 </script>
 
 <style lang="scss" scoped>
@@ -62,7 +64,6 @@ export default {
 }
 
 .comment {
-  margin: 30px 0 0 100px;
   font-size: $fontSizeMM;
   color: $textColor;
 }
@@ -104,33 +105,29 @@ export default {
   }
 
   p {
-    font-size: 1.3em;
+    font-size: 1em;
     text-align: center;
-    line-height: 40px;
+    line-height: 1.5em;
   }
 }
 
-.new-frame {
-  margin-top: 0;
-}
-
 .add-btn {
-  height: 72px;
-  width: 465px;
+  height: 2em;
+  display: block;
+  font-size: $fontSizeMM;
+  border-style: none;
   border-radius: 10px;
-  background-color: #eeee;
-}
-
-.plus {
-  text-align: center;
-  line-height: 72px;
-  font-size: 3em;
-  cursor: pointer;
-
+  background-color: #eeeeee;
+  margin: 1vh 0;
   &:hover {
     background-color: #9999;
-    border-radius: 10px;
     transition: 200ms;
+  }
+  p {
+    text-align: center;
+    line-height: 2em;
+    font-size: $fontSizeMM;
+    cursor: pointer;
   }
 }
 </style>
