@@ -4,23 +4,12 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-
+// import axios from "axios";
+import myAxios from "~/plugins/myAxios";
 export default {
-  asyncData({ params }) {
-    return axios
-      .get(`http://server:3001/id/${params.id}/User`)
-      .then(val => {
-        console.log(val);
-        return {
-          form: val.data
-        };
-      })
-      .catch(e => {
-        return {
-          form: e
-        };
-      });
+  async asyncData({ params }) {
+    let dataResult = await myAxios.getCommon(`id/${params.id}/User`);
+    return { form: dataResult.data };
   },
   data() {
     return {};

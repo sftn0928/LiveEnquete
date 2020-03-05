@@ -20,7 +20,11 @@ module.exports = {
         href:
           "https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700,900&display=swap"
       },
-      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" }
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      {
+        rel: "stylesheet",
+        href: "//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"
+      }
     ]
   },
   /*
@@ -34,7 +38,12 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    {
+      src: "@/plugins/line.js",
+      mode: "client"
+    }
+  ],
   /*
    ** Nuxt.js dev-modules
    */

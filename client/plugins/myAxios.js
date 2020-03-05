@@ -8,5 +8,10 @@ export default {
   },
   get(url, data) {
     return axios.get(url, data);
+  },
+  getCommon(url, data = "") {
+    let URL = process.server ? `http://server:3001/${url}` : `/api/${url}`;
+    console.log(URL);
+    return axios.get(URL, data);
   }
 };
