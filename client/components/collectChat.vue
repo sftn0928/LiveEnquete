@@ -6,12 +6,15 @@
 </template>
 <script>
 import resultComponent from "@/components/result";
-import commentFlame from "@/components/commentFlame";
+import commentFlame from "@/components/commentFrame";
 
 export default {
   components: {
     resultComponent,
     commentFlame
+  },
+  props: {
+    socket
   },
   data() {
     return {
@@ -23,6 +26,9 @@ export default {
     setCollection() {
       this.collection.push(this.collectData);
     }
+  },
+  mounted() {
+    socket.on("emitComment", comment => {});
   }
 };
 </script>

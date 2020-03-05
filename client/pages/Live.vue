@@ -10,6 +10,7 @@
 import collectComponent from "~/components/collectChat";
 import setURLComponent from "~/components/setURL";
 import io from "socket.io-client";
+import Lang from "lodash/lang";
 export default {
   components: {
     collectComponent,
@@ -19,11 +20,20 @@ export default {
     return {
       isCollect: false,
       isSetURL: false,
-      socket: ""
+      socket: "",
+      LiveId: ""
     };
   },
   mounted() {
     this.socket = io();
+  },
+  watch: {
+    isSetURL() {
+      if (isSetURL) {
+        const Id = Lang.isEmpty(LiveId) ? "" : { liveId: this.liveId };
+        this.this.socket.emit("setURL", Id);
+      }
+    }
   }
 };
 </script>

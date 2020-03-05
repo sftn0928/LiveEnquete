@@ -38,16 +38,12 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-<<<<<<< HEAD
-  plugins: ["~/plugins/axios"],
-=======
   plugins: [
     {
       src: "@/plugins/line.js",
       mode: "client"
     }
   ],
->>>>>>> feature/axiosSet
   /*
    ** Nuxt.js dev-modules
    */
