@@ -1,8 +1,8 @@
 <template>
   <div>
-    <commentFrame />
-    <resultComponent />
-    <timeSet />
+    <commentFrame v-if="isStart === false" />
+    <timeSet v-if="isStart === false" @finishTimeSet="hideFrameTime" />
+    <resultComponent v-if="isStart" />
   </div>
 </template>
 <script>
@@ -21,13 +21,16 @@ export default {
   },
   data() {
     return {
-      collectData: "",
-      collection: []
+      isStart: false,
     };
   },
   methods: {
     setCollection() {
       this.collection.push(this.collectData);
+    },
+    hideFrameTime() {
+      this.isStart = !this.isStart;
+      
     }
   },
   mounted() {

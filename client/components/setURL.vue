@@ -3,7 +3,7 @@
     <p>YouTube ライブ配信中のページURLを入力して下さい</p>
     <input type="text" placeholder=" URL" ref="inputURL" />
     {{ error }}
-    <button @click="setURL">始める</button>
+    <button @click="finishSetURL">始める</button>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
     };
   },
   methods: {
-    setURL() {
+    finishSetURL() {
       let test = this.$store.commit("setLiveURL", this.$refs.inputURL.value);
       console.log(this.$store.getters.liveId);
       this.$store.getters.liveId

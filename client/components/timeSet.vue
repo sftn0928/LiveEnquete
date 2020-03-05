@@ -22,14 +22,19 @@
         </select>
         <p>秒間 コメントを取得する</p>
     </div>
-    <button class="start-button">スタート</button>
+    <button class="start-button" @click="finish">スタート</button>
 </div>
-    
 
 </template>
 
 <script>
-export default {};
+export default {
+    methods:{
+        finish(){
+            this.$emit("finishTimeSet")
+        }
+    }
+};
 </script>
 
 <style lang="scss">
