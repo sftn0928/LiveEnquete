@@ -62,6 +62,7 @@ export default {
 }
 
 .comment {
+  margin: 30px 0 0 100px;
   font-size: $fontSizeMM;
   color: $textColor;
 }

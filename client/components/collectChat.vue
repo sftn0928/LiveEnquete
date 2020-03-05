@@ -8,7 +8,11 @@
   </div>
 </template>
 <script>
+import commentFrameComponent from "~/components/commentFrame";
 export default {
+  components: {
+    commentFrameComponent
+  },
   data() {
     return {
       collectData: "",
