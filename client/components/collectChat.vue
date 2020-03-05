@@ -1,17 +1,17 @@
 <template>
   <div>
-    <commentFlame />
+    <commentFrame />
     <resultComponent />
   </div>
 </template>
 <script>
 import resultComponent from "@/components/result";
-import commentFlame from "@/components/commentFlame";
+import commentFrame from "@/components/commentFrame";
 
 export default {
   components: {
     resultComponent,
-    commentFlame
+    commentFrame
   },
   data() {
     return {
