@@ -1,9 +1,9 @@
 exports.socketConnect = LiveChat => socket => {
   let Live;
   console.log(socket.id);
-  socket.on("setURL", url => {
-    Live = new LiveChat({ liveId: url });
-    console.log(url);
+  socket.on("setURL", Id => {
+    Live = new LiveChat(Id);
+    console.log(Id);
     Live.on("error", err => {
       console.log(err);
     });
@@ -16,7 +16,11 @@ exports.socketConnect = LiveChat => socket => {
     });
     Live.on("comment", comment => {
       console.log(comment.message[0].text);
-      socket.emit("emitComment", comment.message);
+      try {
+        socket.emit("emitComment", comment.message);
+      } catch (error) {
+        console.log(commit.message, "this is 無言のスパチャ");
+      }
     });
     Live.start();
   });

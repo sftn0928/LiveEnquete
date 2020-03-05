@@ -1,4 +1,4 @@
-import Lamg from "lodash/lang";
+import Lang from "lodash/lang";
 
 export const state = () => ({
   csrfToken: "",
@@ -11,16 +11,15 @@ export const mutations = {
     state.csrfToken = csrfToken;
   },
   setLiveURL(state, URL) {
-    const parseURL = URL.match(/watch\?v=([A-Za-z0-9/-]{11})/)[1];
-    state.liveURL = parseURL;
-    return parseURL;
+    const parseURL = URL.match(/watch\?v=([A-Za-z0-9/-]{11})/);
+    state.liveURL = Lang.isNull(parseURL) ? false : parseURL[1];
   }
 };
 
 export const getters = {
-  liveURL: state => state.liveURL,
-  pageURL: state => state.liveURL,
-  isPageURL: state => !Lang.isNull(state.isPageURL)
+  liveId: state => state.liveURL,
+  pageId: state => state.liveURL,
+  isPageId: state => !Lang.isEmpty(state.isPageURL)
 };
 
 export const actions = {

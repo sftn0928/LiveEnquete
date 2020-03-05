@@ -2,16 +2,22 @@
   <div>
     <commentFrame />
     <resultComponent />
+    <timeSet />
   </div>
 </template>
 <script>
 import resultComponent from "@/components/result";
 import commentFrame from "@/components/commentFrame";
+import timeSet from "@/components/timeSet";
 
 export default {
   components: {
     resultComponent,
-    commentFrame
+    commentFrame,
+    timeSet
+  },
+  props: {
+    socket: Object
   },
   data() {
     return {
@@ -23,6 +29,9 @@ export default {
     setCollection() {
       this.collection.push(this.collectData);
     }
+  },
+  mounted() {
+    this.socket.on("emitComment", comment => {});
   }
 };
 </script>
