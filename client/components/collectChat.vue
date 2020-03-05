@@ -1,19 +1,19 @@
 <template>
   <div>
-    <commentFlame />
+    <commentFrame />
     <resultComponent />
     <timeSet />
   </div>
 </template>
 <script>
 import resultComponent from "@/components/result";
-import commentFlame from "@/components/commentFrame";
+import commentFrame from "@/components/commentFrame";
 import timeSet from "@/components/timeSet";
 
 export default {
   components: {
     resultComponent,
-    commentFlame,
+    commentFrame,
     timeSet
   },
   props: {
@@ -31,7 +31,7 @@ export default {
     }
   },
   mounted() {
-    socket.on("emitComment", comment => {});
+    this.socket.on("emitComment", comment => {});
   }
 };
 </script>

@@ -18,21 +18,22 @@ export default {
     return {
       isSetURL: false,
       socket: {},
-      LiveId: ""
+      liveId: ""
     };
   },
   methods: {
     hideSetURL() {
-      this.LiveId = this.$store.getters.liveId;
+      this.liveId = this.$store.getters.liveId;
       this.isSetURL = !this.isSetURL;
     }
   },
   mounted() {
     this.socket = io();
+    console.log(this.socket);
   },
   watch: {
     isSetURL() {
-      const Id = Lang.isEmpty(LiveId) ? "" : { liveId: this.liveId };
+      const Id = this.liveId ? { liveId: this.liveId } : "";
     }
   }
 };
