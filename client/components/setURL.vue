@@ -1,7 +1,11 @@
 <template>
   <div class="set-url">
     <p>YouTube ライブ配信中のページURLを入力して下さい</p>
+<<<<<<< HEAD
     <input type="text" placeholder="URL" ref="input" />
+=======
+    <input type="text" placeholder=" URL" ref="inputURL" />
+>>>>>>> feature/axiosSet
     <button @click="setURL">始める</button>
   </div>
 </template>
@@ -10,7 +14,12 @@
 export default {
   methods: {
     setURL() {
+<<<<<<< HEAD
       this.$emit("setURL", this.$refs.input.value);
+=======
+      this.$store.commit("setLiveURL", this.$refs.inputURL.value);
+      console.log(this.$store.getters.liveURL);
+>>>>>>> feature/axiosSet
     }
   }
 };

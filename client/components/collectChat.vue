@@ -1,13 +1,16 @@
 <template>
   <div>
     <commentFlame />
-    <button @click="setCollection">スタート</button>
+    <resultComponent />
   </div>
 </template>
 <script>
-import commentFlame from "~/components/commentFrame.vue";
+import resultComponent from "@/components/result";
+import commentFlame from "@/components/commentFlame";
+
 export default {
   components: {
+    resultComponent,
     commentFlame
   },
   data() {
