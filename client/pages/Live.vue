@@ -8,17 +8,23 @@
 import resultComponent from "~/components/result";
 import collectComponent from "~/components/collectChat";
 import setURLComponent from "~/components/setURL";
+
 import io from "socket.io-client";
 import Lang from "lodash/lang";
 export default {
   components: {
     collectComponent,
-    setURLComponent
+    setURLComponent,
   },
   data() {
     return {
       isSetURL: false,
+<<<<<<< HEAD
       socket: io(),
+=======
+      isCollect: true,
+      socket: "",
+>>>>>>> 3494de7870a9724a6666b6a9d6556d8f06929bf0
       liveId: ""
     };
   },
@@ -26,6 +32,7 @@ export default {
     hideSetURL() {
       this.liveId = this.$store.getters.liveId;
       this.isSetURL = !this.isSetURL;
+      this.isCollect = !this.isCollect;
     }
   },
   mounted() {
