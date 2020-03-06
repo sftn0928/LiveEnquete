@@ -3,7 +3,11 @@
     <p class="comment">取得するコメント</p>
     <div class="coment-container">
       <div class="frame-wrapper">
-        <div v-for="(val, index) in items" :key="index" class="add-frame-wrapper">
+        <div
+          v-for="(val, index) in items"
+          :key="index"
+          class="add-frame-wrapper"
+        >
           <input
             type="text"
             @change="changeInput($event, index)"
@@ -27,13 +31,16 @@
 </template>
 
 <script>
+import _ from "lodash";
 export default {
   data() {
     return {
       items: [""]
     };
   },
-
+  props: {
+    choiceItem: Array
+  },
   computed: {
     isHide() {
       return this.items.length >= 3 ? false : true;
@@ -49,6 +56,14 @@ export default {
     },
     deleteInput(index) {
       this.items.splice(index, 1);
+    }
+  },
+  watch: {
+    items() {
+      this.$emit("setCollect", this.items);
+    },
+    choiceItem() {
+      this.items = _.clone(this.choiceItem);
     }
   }
 };
@@ -73,8 +88,8 @@ export default {
 }
 
 .coment-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .frame-wrapper {

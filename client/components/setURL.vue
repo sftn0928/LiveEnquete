@@ -62,7 +62,7 @@ export default {
     margin: 10vh 0;
   }
 }
-.error-message{
+.error-message {
   color: red;
   font-size: $fontSizeMM;
 }
