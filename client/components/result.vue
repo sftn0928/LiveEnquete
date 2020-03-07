@@ -19,6 +19,9 @@
         ></line-chart>
       </client-only>
     </div>
+    <div v-for="(data, index) in rate" :key="index">
+      {{ data.name }}:{{ (data.sum / sum === 0 ? 1 : sum) * 100 }} %
+    </div>
   </div>
 </template>
 <script>
@@ -58,7 +61,9 @@ export default {
     ...mapGetters({
       chartDataLine: "chartDataLine",
       count: "count",
-      isCollect: "stop"
+      isCollect: "stop",
+      rate: "rateData",
+      sum: "sumData"
     })
   },
   methods: {

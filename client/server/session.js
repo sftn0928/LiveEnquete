@@ -10,8 +10,6 @@ router.use((req, res, next) => {
   next();
 });
 
-const expressSession = require("express-session");
-
 router.post("/login", (req, res) => {
   if (!!req.body.authUser) {
     req.session.authUser = req.body.authUser;

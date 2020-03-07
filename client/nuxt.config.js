@@ -1,5 +1,5 @@
-import session from "express-session";
-import express from "express";
+const express = require("express");
+const expressSession = require("express-session");
 
 module.exports = {
   mode: "universal",
@@ -97,13 +97,13 @@ module.exports = {
   },
   serverMiddleware: [
     express.json(),
-    session({
+    expressSession({
       secret: "super-secret-key",
       resave: false,
       saveUninitialized: false,
       cookie: { maxAge: 60000 }
     }),
     // Api middleware
-    "~/api"
+    "~/server/session.js"
   ]
 };
