@@ -1,12 +1,16 @@
 <template>
   <div>
-    {{ time }}
-    <button @click="collectStop" v-if="isCollect === false">
-      Stop
-    </button>
-    <button @click="collectRestart" v-if="isCollect">
-      Restart
-    </button>
+    <div v-if="count !== '∞'">
+      {{ time }}
+    </div>
+    <div v-if="count === '∞'">
+      <button @click="collectStop" v-if="isCollect === false">
+        Stop
+      </button>
+      <button @click="collectRestart" v-if="isCollect">
+        Restart
+      </button>
+    </div>
     <client-only>
       <line-chart
         :chartData="chartDataLine"
@@ -49,16 +53,17 @@ export default {
     },
     StartInterval() {
       if (!_.isEmpty(this.interval)) return;
-      this.interval = setInterval(() => {
-        if (this.count !== "∞") {
+      console.log(this.count);
+      if (this.count !== "∞") {
+        this.interval = setInterval(() => {
           let time = Math.floor((this.count - Date.now()) / 1000);
           console.log(time);
           this.time = `${Math.floor(time / 60)}:${time % 60}`;
           if (time <= 0) {
             this.collectStop();
           }
-        }
-      }, 1000);
+        }, 1000);
+      }
     },
     collectRestart() {
       this.$store.commit("collectRestart");

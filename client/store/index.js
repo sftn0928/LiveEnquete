@@ -27,7 +27,8 @@ export const state = () => ({
   collects: {},
   count: "",
   interval: "",
-  stop: false
+  collectStop: false,
+  isCollect: false
 });
 
 export const mutations = {
@@ -54,7 +55,7 @@ export const mutations = {
   SET_URL(state, payLord) {},
   getData(state, message) {
     if (_.isEmpty(state.collects)) return;
-    if (state.stop) return;
+    if (state.collectStop) return;
     let time = Math.floor((Date.now() - state.collects.startTime) / 1000);
     state.collects.labels = Array.from(new Array(time), (v, i) => i);
     state.collects.datasets.forEach(value => {
@@ -71,18 +72,19 @@ export const mutations = {
     state.collects = Object.assign({}, state.collects);
   },
   countSet(state, time) {
+    state.isCollect = true;
     if (time !== "∞") {
       state.count = Date.now() + time * 1000;
-    }
+    } else state.count = time;
   },
   decrementCount(state, interval) {
     state.interval = interval;
   },
   collectStop(state) {
-    state.stop = true;
+    state.collectSto = true;
   },
   collectRestart(state) {
-    state.stop = false;
+    state.collectSto = false;
   }
 };
 
@@ -91,7 +93,8 @@ export const getters = {
   pageId: state => state.pageId,
   isPageId: state => !Lang.isEmpty(state.pageId),
   interval: state => state.interval,
-  stop: state => state.stop,
+  stop: state => state.collectSto,
+  isCollect: state => state.isCollect,
   chartDataLine: state => {
     const data = state.collects;
     return {

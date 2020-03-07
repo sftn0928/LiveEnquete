@@ -33,6 +33,11 @@ export default {
       this.$store.commit("startCollect", this.$refs.comment.items);
       this.isStart = !this.isStart;
     }
+  },
+  mounted() {
+    if (this.$store.state.isCollect) {
+      this.isStart = true;
+    }
   }
 };
 </script>
