@@ -28,7 +28,9 @@ export const state = () => ({
   count: "",
   interval: "",
   isCollectStop: false,
-  isCollect: false
+  isCollect: false,
+  betweenTime: 0,
+  betweenTimeStart: 0
 });
 
 export const mutations = {
@@ -56,7 +58,10 @@ export const mutations = {
   getData(state, message) {
     if (_.isEmpty(state.collects)) return;
     if (state.isCollectStop) return;
-    let time = Math.floor((Date.now() - state.collects.startTime) / 1000);
+    let time = Math.floor(
+      (Date.now() - state.betweenTime - state.collects.startTime) / 1000
+    );
+    console.log(time);
     state.collects.labels = Array.from(new Array(time), (v, i) => i);
     state.collects.datasets.forEach(value => {
       if (message.includes(value.label)) {
@@ -82,9 +87,12 @@ export const mutations = {
   },
   collectStop(state) {
     state.isCollectStop = true;
+    state.betweenTimeStart = Date.now();
   },
   collectRestart(state) {
     state.isCollectStop = false;
+    state.betweenTime = state.betweenTime + Date.now() - state.betweenTimeStart;
+    console.log(state.betweenTime);
   }
 };
 
