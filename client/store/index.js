@@ -27,7 +27,7 @@ export const state = () => ({
   collects: {},
   count: "",
   interval: "",
-  collectStop: false,
+  isCollectStop: false,
   isCollect: false
 });
 
@@ -47,7 +47,7 @@ export const mutations = {
         sum: 0,
         data: [],
         label: value,
-        backgroundColor: `hsla(0, 0, 0, 0)`,
+        backgroundColor: `hsla(0, 100%, 100%, 0)`,
         borderColor: `hsla(${index * 30}, 100%, 60%, 1)`
       };
     });
@@ -55,7 +55,7 @@ export const mutations = {
   SET_URL(state, payLord) {},
   getData(state, message) {
     if (_.isEmpty(state.collects)) return;
-    if (state.collectStop) return;
+    if (state.isCollectStop) return;
     let time = Math.floor((Date.now() - state.collects.startTime) / 1000);
     state.collects.labels = Array.from(new Array(time), (v, i) => i);
     state.collects.datasets.forEach(value => {
@@ -81,10 +81,10 @@ export const mutations = {
     state.interval = interval;
   },
   collectStop(state) {
-    state.collectSto = true;
+    state.isCollectStop = true;
   },
   collectRestart(state) {
-    state.collectSto = false;
+    state.isCollectStop = false;
   }
 };
 
@@ -93,7 +93,7 @@ export const getters = {
   pageId: state => state.pageId,
   isPageId: state => !Lang.isEmpty(state.pageId),
   interval: state => state.interval,
-  stop: state => state.collectSto,
+  stop: state => state.isCollectStop,
   isCollect: state => state.isCollect,
   chartDataLine: state => {
     const data = state.collects;

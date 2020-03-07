@@ -53,7 +53,7 @@ export default {
     },
     StartInterval() {
       if (!_.isEmpty(this.interval)) return;
-      console.log(this.count);
+      console.log(this.count == "∞");
       if (this.count !== "∞") {
         this.interval = setInterval(() => {
           let time = Math.floor((this.count - Date.now()) / 1000);
