@@ -28,6 +28,14 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        legend: {
+          labels: {
+            padding: 10,
+            boxWidth: 40,
+            fontSize: 10
+
+          }
+        },
         layout: {
           padding: {
             left: 50,
@@ -41,12 +49,18 @@ export default {
           xPadding: 50,
         },
         scales: {
-        xAxes: [{
-          ticks: {
-            autoSkip: true,
-            maxTicksLimit: 30 //値の最大表示数
-          },
-        }],
+          xAxes: [{
+            ticks: {
+              autoSkip: true,
+              maxTicksLimit: 30 //値の最大表示数
+            },
+          }],
+          yAxes: [{
+            ticks: {
+              autoSkip: true,
+              maxTicksLimit: 5 //値の最大表示数
+            },
+          }]
       }
       },
       interval: "",
