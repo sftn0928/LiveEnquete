@@ -1,6 +1,6 @@
 <template>
   <div>
-    <commentFrame v-if="isStart === false" />
+    <commentFrame v-if="isStart === false" ref="comment" />
     <timeSet v-if="isStart === false" @finishTimeSet="hideFrameTime" />
     <resultComponent v-if="isStart" />
   </div>
@@ -9,6 +9,7 @@
 import resultComponent from "@/components/result";
 import commentFrame from "@/components/commentFrame";
 import timeSet from "@/components/timeSet";
+import _ from "lodash";
 
 export default {
   components: {
@@ -16,12 +17,9 @@ export default {
     commentFrame,
     timeSet
   },
-  props: {
-    socket: Object
-  },
   data() {
     return {
-      isStart: false,
+      isStart: false
     };
   },
   methods: {
@@ -30,11 +28,10 @@ export default {
     },
     hideFrameTime() {
       this.isStart = !this.isStart;
-      
+      const items = this.$refs.comment.items.filter(v => v);
+      if (_.isEmpty(items)) return;
+      this.$store.commit("startCollect", this.$refs.comment.items);
     }
-  },
-  mounted() {
-    this.socket.on("emitComment", comment => {});
   }
 };
 </script>

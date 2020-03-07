@@ -1,7 +1,7 @@
 <template>
   <div>
     <setURLComponent v-if="isSetURL === false" @finishSetURL="hideSetURL" />
-    <collectComponent v-if="isSetURL" :socket="socket" />
+    <collectComponent v-if="isSetURL" />
   </div>
 </template>
 <script>
@@ -9,18 +9,14 @@ import resultComponent from "~/components/result";
 import collectComponent from "~/components/collectChat";
 import setURLComponent from "~/components/setURL";
 
-import io from "socket.io-client";
-import Lang from "lodash/lang";
 export default {
   components: {
     collectComponent,
-    setURLComponent,
+    setURLComponent
   },
   data() {
     return {
       isSetURL: false,
-      isCollect: true,
-      socket: "",
       liveId: ""
     };
   },
@@ -28,16 +24,15 @@ export default {
     hideSetURL() {
       this.liveId = this.$store.getters.liveId;
       this.isSetURL = !this.isSetURL;
-      this.isCollect = !this.isCollect;
+    },
+    connect(Id) {
+      this.$store.commit("SET_URL", Id);
     }
-  },
-  mounted() {
-    this.socket = io();
-    console.log(this.socket);
   },
   watch: {
     isSetURL() {
       const Id = this.liveId ? { liveId: this.liveId } : "";
+      this.connect(Id);
     }
   }
 };

@@ -1,14 +1,13 @@
 <template>
   <div>
     <client-only>
-      <line-chart
-        :chartData="chartDataCom"
-        :options="chartOptions"
-      ></line-chart>
+      <line-chart :chartData="chartData" :options="chartOptions"></line-chart>
     </client-only>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -26,19 +25,9 @@ export default {
     }, 1000);
   },
   computed: {
-    chartDataCom() {
-      return {
-        labels: Array.from(new Array(this.time), (v, i) => i / 10),
-        datasets: [
-          {
-            data: [...Array(this.time)].map((v, i) => i + 1 / 10)
-          },
-          {
-            data: [...Array(this.time)].map((v, i) => Math.random() * i)
-          }
-        ]
-      };
-    }
+    ...mapGetters({
+      chartData: "chartData"
+    })
   }
 };
 </script>
