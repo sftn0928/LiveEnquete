@@ -1,3 +1,22 @@
+const axios = require("@nuxtjs/axios");
+const fs = require("fs");
+
+const log4js = require("log4js");
+
+log4js.configure({
+  appenders: {
+    system: { type: "file", filename: "system.log" },
+    error: { type: "file", filename: "error.log" }
+  },
+  categories: {
+    default: { appenders: ["system"], level: "debug" },
+    error: { appenders: ["error"], level: "error" }
+  }
+});
+
+const logger = log4js.getLogger("system");
+const loggerError = log4js.getLogger("error");
+
 exports.socketConnect = LiveChat => socket => {
   let Live;
   console.log(socket.id);
@@ -15,12 +34,9 @@ exports.socketConnect = LiveChat => socket => {
       console.log(reason);
     });
     Live.on("comment", comment => {
-      try {
-        console.log(comment.message[0].text);
-        socket.emit("emitComment", comment.message[0].text);
-      } catch (error) {
-        console.log(commit.message, "this is 無言のスパチャ");
-      }
+      fs.writeFileSync("comment.txt", comment.message);
+      logger.debug(comment.message);
+      socket.emit("emitComment", comment.message[0].text);
     });
     Live.start();
   });
@@ -32,5 +48,11 @@ exports.socketConnect = LiveChat => socket => {
         Live.stop();
       }
     }
+  });
+
+  socket.on("setChannelURL", async function(Id) {
+    const liveRes = await axios.get(
+      `https://www.youtube.com/channel/${Id}/live`
+    );
   });
 };

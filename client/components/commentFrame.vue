@@ -12,6 +12,7 @@
             type="text"
             @change="changeInput($event, index)"
             :value="val"
+            @keyup.enter="addFrame"
             class="comment-frame new-frame"
           />
           <div
@@ -22,7 +23,7 @@
             <p>×</p>
           </div>
         </div>
-        <div class="add-btn">
+        <div class="add-btn" >
           <p @click="addFrame">＋</p>
         </div>
       </div>
@@ -48,7 +49,7 @@ export default {
   },
 
   methods: {
-    addFrame() {
+    addFrame(event) {
       this.items.push(this.item);
     },
     changeInput(event, index) {
