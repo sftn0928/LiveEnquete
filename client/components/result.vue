@@ -23,9 +23,11 @@
         ></line-chart>
       </client-only>
     </div>
-    <div v-for="(data, index) in rate" :key="index">
-      {{ data.name }}:{{ data.sum }}
+    <div class="result-table">
+      <div v-for="(data, index) in rate" :key="index" class="result-data">
+      {{ data.name }} : {{ data.sum }}票
       {{ Math.floor((data.sum / (sum || 1)) * 100) }} %
+    </div>
     </div>
   </div>
 </template>
@@ -147,6 +149,18 @@ export default {
   border-radius: 10px;
   cursor: pointer;
   margin: calc(2vh + 25px) 0 2vh;
+}
+
+.result-table{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.result-data{
+  margin: 2em;
+  font-size: 15px;
+  color: $textColor;
 }
 
 .chart-card {
