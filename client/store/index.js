@@ -21,6 +21,7 @@ let collectsInter = {
 export const state = () => ({
   //セキュリティトークン
   csrfToken: "",
+  authUser: null,
   liveId: "",
   pageId: "",
   socket: "",
@@ -36,6 +37,10 @@ export const state = () => ({
 export const mutations = {
   SET_CSRF_TOKEN(state, csrfToken) {
     state.csrfToken = csrfToken;
+  },
+  SET_URL(state, payLord) {},
+  SET_USER: function(state, user) {
+    state.authUser = user;
   },
   setLiveURL(state, URL) {
     const parseURL = URL.match(/watch\?v=([A-Za-z0-9-/:-@\[-~/-]{11})/);
@@ -54,7 +59,6 @@ export const mutations = {
       };
     });
   },
-  SET_URL(state, payLord) {},
   getData(state, message) {
     if (_.isEmpty(state.collects)) return;
     if (state.isCollectStop) return;
@@ -119,13 +123,38 @@ export const getters = {
       })
     };
   },
-  count: state => state.count
+  count: state => state.count,
+  rateData: state => {
+    const data = state.collects;
+    return data.datasets.map(value => {
+      return {
+        name: value.label,
+        sum: value.sum
+      };
+    });
+  },
+  sumData: state => {
+    const data = state.collects;
+    return data.datasets.reduce((sum, cu) => sum + cu.sum, 0);
+  }
 };
 
 export const actions = {
   nextServerInit({ commit }, { req }) {
-    if (req.cookies) {
-      commit("SET_CSRF_TOKEN", req.csrfToken());
+    if (req.session && req.session.authUser) {
+      commit("SET_USER", req.session.authUser);
     }
+  },
+
+  async login({ commit }, { user }) {
+    commit("SET_USER", user);
+
+    await axios.post("/session/login", { authUser: user });
+  },
+
+  async logout({ commit }) {
+    commit("SET_USER", null);
+
+    await axios.post("/session/logout");
   }
 };
