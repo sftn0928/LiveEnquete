@@ -4,19 +4,28 @@
       {{ time }}
     </div>
     <div v-if="count === '∞'" class="switching-container">
-      <button @click="collectStop" v-if="isCollect === false" class="switching-button">
+      <button
+        @click="collectStop"
+        v-if="isCollect === false"
+        class="switching-button"
+      >
         STOP
       </button>
       <button @click="collectRestart" v-if="isCollect" class="switching-button">
         RESTART
       </button>
     </div>
-    <client-only>
-      <line-chart
-        :chartData="chartDataLine"
-        :options="chartOptions"
-      ></line-chart>
-    </client-only>
+    <div>
+      <client-only>
+        <line-chart
+          :chartData="chartDataLine"
+          :options="chartOptions"
+        ></line-chart>
+      </client-only>
+    </div>
+    <div v-for="(data, index) in rate" :key="index">
+      {{ data.name }}:{{ (data.sum / sum === 0 ? 1 : sum) * 100 }} %
+    </div>
   </div>
 </template>
 <script>
@@ -33,7 +42,6 @@ export default {
             padding: 25,
             boxWidth: 40,
             fontSize: 10
-
           }
         },
         layout: {
@@ -45,8 +53,8 @@ export default {
           }
         },
         tooltips: {
-          mode: 'index',
-          xPadding: 50,
+          mode: "index",
+          xPadding: 50
         },
         scales: {
           xAxes: [{
@@ -77,7 +85,9 @@ export default {
     ...mapGetters({
       chartDataLine: "chartDataLine",
       count: "count",
-      isCollect: "stop"
+      isCollect: "stop",
+      rate: "rateData",
+      sum: "sumData"
     })
   },
   methods: {
@@ -108,11 +118,11 @@ export default {
 };
 </script>
 <style lang="scss">
-.result-container{
+.result-container {
   height: calc(100vh - #{$headerHeight});
 }
 
-.timer-view{
+.timer-view {
   display: flex;
   justify-content: center;
   font-size: $fontSizeML;
@@ -120,12 +130,12 @@ export default {
   margin: 3vh;
 }
 
-.switching-container{
+.switching-container {
   display: flex;
   justify-content: center;
 }
 
-.switching-button{
+.switching-button {
   width: 8em;
   height: 2.5em;
   display: inline-block;

@@ -41,8 +41,8 @@ export default {
 
       const time =
         minute === "∞" ? minute : Number(minute) * 60 + Number(second);
-      return [minute, second].every(v => v === 0)
-        ? setAlert("時間を指定してください")
+      return [minute, second].every(v => v === "0")
+        ? this.setAlert("時間を指定してください")
         : this.goResult(time);
     },
     setAlert(str) {

@@ -7,7 +7,7 @@
 // import axios from "axios";
 import myAxios from "~/plugins/myAxios";
 export default {
-  async asyncData({ params }) {
+  async asyncData({ params, con }) {
     let dataResult = await myAxios.getCommon(`id/${params.id}/User`);
     return { form: dataResult.data };
   },
