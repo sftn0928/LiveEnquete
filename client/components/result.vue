@@ -1,8 +1,17 @@
 <template>
   <div>
-    {{ count }}
+    {{ time }}
+    <button @click="collectStop" v-if="isCollect === false">
+      Stop
+    </button>
+    <button @click="collectRestart" v-if="isCollect">
+      Restart
+    </button>
     <client-only>
-      <line-chart :chartData="chartData" :options="chartOptions"></line-chart>
+      <line-chart
+        :chartData="chartDataLine"
+        :options="chartOptions"
+      ></line-chart>
     </client-only>
   </div>
 </template>
@@ -15,22 +24,47 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false
-      }
+      },
+      interval: "",
+      time: ""
     };
   },
   mounted() {
-    if (!_.isEmpty(interval)) return;
-
-    let interval = setInterval(() => {
-      this.$store.commit("decrementCount", interval);
-    }, 1000);
+    this.StartInterval();
+  },
+  destroy() {
+    clearInterval(this.interval);
   },
   computed: {
     ...mapGetters({
-      chartData: "chartData",
+      chartDataLine: "chartDataLine",
       count: "count",
-      interval: "interval"
+      isCollect: "stop"
     })
+  },
+  methods: {
+    collectStop() {
+      clearInterval(this.interval);
+      this.$store.commit("collectStop");
+    },
+    StartInterval() {
+      if (!_.isEmpty(this.interval)) return;
+      this.interval = setInterval(() => {
+        if (this.count !== "∞") {
+          let time = Math.floor((this.count - Date.now()) / 1000);
+          console.log(time);
+          this.time = `${Math.floor(time / 60)}:${time % 60}`;
+          if (time <= 0) {
+            this.collectStop();
+          }
+        }
+      }, 1000);
+    },
+    collectRestart() {
+      this.$store.commit("collectRestart");
+      this.StartInterval();
+    },
+    setTime() {}
   }
 };
 </script>
