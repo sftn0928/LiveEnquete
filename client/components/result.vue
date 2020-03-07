@@ -30,6 +30,11 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        legend: {
+          labels: {
+            padding: 30
+          }
+        },
         layout: {
           padding: {
             left: 50,

@@ -21,6 +21,7 @@ let collectsInter = {
 export const state = () => ({
   //セキュリティトークン
   csrfToken: "",
+  authUser: null,
   liveId: "",
   pageId: "",
   socket: "",
@@ -81,6 +82,9 @@ export const mutations = {
     if (time !== "∞") {
       state.count = Date.now() + time * 1000;
     } else state.count = time;
+  },
+  SET_USER: function(state, user) {
+    state.authUser = user;
   },
   decrementCount(state, interval) {
     state.interval = interval;

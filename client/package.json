@@ -18,6 +18,7 @@
     "chart.js": "^2.9.3",
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
+    "express-session": "^1.17.0",
     "lodash": "^4.17.15",
     "log4js": "^6.1.2",
     "nuxt": "^2.0.0",

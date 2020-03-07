@@ -1,3 +1,6 @@
+import session from "express-session";
+import express from "express";
+
 module.exports = {
   mode: "universal",
   /*
@@ -91,5 +94,16 @@ module.exports = {
      */
     vendor: ["socket.io-client"],
     extend(config, ctx) {}
-  }
+  },
+  serverMiddleware: [
+    express.json(),
+    session({
+      secret: "super-secret-key",
+      resave: false,
+      saveUninitialized: false,
+      cookie: { maxAge: 60000 }
+    }),
+    // Api middleware
+    "~/api"
+  ]
 };
