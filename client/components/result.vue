@@ -11,12 +11,14 @@
         Restart
       </button>
     </div>
-    <client-only>
-      <line-chart
-        :chartData="chartDataLine"
-        :options="chartOptions"
-      ></line-chart>
-    </client-only>
+    <div>
+      <client-only>
+        <line-chart
+          :chartData="chartDataLine"
+          :options="chartOptions"
+        ></line-chart>
+      </client-only>
+    </div>
   </div>
 </template>
 <script>
@@ -27,7 +29,15 @@ export default {
     return {
       chartOptions: {
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            left: 50,
+            right: 0,
+            top: 0,
+            bottom: 0
+          }
+        }
       },
       interval: "",
       time: ""
