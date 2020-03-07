@@ -24,7 +24,8 @@
       </client-only>
     </div>
     <div v-for="(data, index) in rate" :key="index">
-      {{ data.name }}:{{ (data.sum / sum === 0 ? 1 : sum) * 100 }} %
+      {{ data.name }}:{{ data.sum }}
+      {{ Math.floor((data.sum / (sum || 1)) * 100) }} %
     </div>
   </div>
 </template>
