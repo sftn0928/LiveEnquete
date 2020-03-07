@@ -30,7 +30,7 @@ export default {
         maintainAspectRatio: false,
         legend: {
           labels: {
-            padding: 10,
+            padding: 25,
             boxWidth: 40,
             fontSize: 10
 
@@ -58,7 +58,7 @@ export default {
           yAxes: [{
             ticks: {
               autoSkip: true,
-              maxTicksLimit: 5 //値の最大表示数
+              maxTicksLimit: 6 //値の最大表示数
             },
           }]
       }
@@ -135,7 +135,7 @@ export default {
   border-style: none;
   border-radius: 10px;
   cursor: pointer;
-  margin: 2vh 0;
+  margin: calc(2vh + 25px) 0 2vh;
 }
 
 .chart-card {
