@@ -10,16 +10,18 @@
     </div>
     <div class="how-to-use">
       <h2>使い方</h2>
-      <div class="image-sample"></div>
+      <img class="image" src="../assets/img/setURL.jpg" alt="setURL-img">
       <p>
-        アンケートを行いたい生放送のYouTubeチャンネルのURLを入力して「始める」ボタンを押します
+        アンケートを行いたい生放送のURLを入力して「始める」ボタンを押します
       </p>
-      <div class="image-sample"></div>
+      <img class="image" src="../assets/img/setComment.jpg" alt="setURL-img">
       <p>アンケートに使うコメントを入力して計測する時間を選択します</p>
       <p>「スタート」ボタンを押すとアンケートの集計が開始します</p>
     </div>
     <div class="functions">
       <h2>ユーザー登録をすると利用できる機能</h2>
+      <div class="image-sample"></div>
+      <p>ユーザー登録時にチャンネルURLを登録すると集計時のURL入力を省略できます</p>
       <div class="image-sample"></div>
       <p>マイページの履歴から過去に行ったアンケートの結果を閲覧できます</p>
       <div class="image-sample"></div>
@@ -104,6 +106,11 @@ export default {};
   height: 33.75vw;
   background: #ffffff;
   border: 2px solid #eeeeee;
+  margin: 10vh 0;
+}
+.image{
+  width: 60vw;
+  height: 33.75vw;
   margin: 10vh 0;
 }
 .functions {

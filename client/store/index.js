@@ -112,7 +112,9 @@ export const getters = {
           label: v.label,
           data: v.data,
           borderColor: v.borderColor,
-          backgroundColor: v.backgroundColor
+          backgroundColor: v.backgroundColor,
+          pointRadius: 0,
+          lineTension: 0
         };
       })
     };

@@ -1,14 +1,18 @@
 <template>
-  <div>
-    <div v-if="count !== '∞'">
+  <div class="result-container">
+    <div v-if="count !== '∞'" class="timer-view">
       {{ time }}
     </div>
-    <div v-if="count === '∞'">
-      <button @click="collectStop" v-if="isCollect === false">
-        Stop
+    <div v-if="count === '∞'" class="switching-container">
+      <button
+        @click="collectStop"
+        v-if="isCollect === false"
+        class="switching-button"
+      >
+        STOP
       </button>
-      <button @click="collectRestart" v-if="isCollect">
-        Restart
+      <button @click="collectRestart" v-if="isCollect" class="switching-button">
+        RESTART
       </button>
     </div>
     <div>
@@ -30,13 +34,42 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        legend: {
+          labels: {
+            padding: 10,
+            boxWidth: 40,
+            fontSize: 10
+          }
+        },
         layout: {
           padding: {
             left: 50,
-            right: 0,
+            right: 50,
             top: 0,
             bottom: 0
           }
+        },
+        tooltips: {
+          mode: "index",
+          xPadding: 50
+        },
+        scales: {
+          xAxes: [
+            {
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 30 //値の最大表示数
+              }
+            }
+          ],
+          yAxes: [
+            {
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 5 //値の最大表示数
+              }
+            }
+          ]
         }
       },
       interval: "",
@@ -83,7 +116,37 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
+.result-container {
+  height: calc(100vh - #{$headerHeight});
+}
+
+.timer-view {
+  display: flex;
+  justify-content: center;
+  font-size: $fontSizeML;
+  color: $textColor;
+  margin: 3vh;
+}
+
+.switching-container {
+  display: flex;
+  justify-content: center;
+}
+
+.switching-button {
+  width: 8em;
+  height: 2.5em;
+  display: inline-block;
+  font-size: $fontSizeMM;
+  background-color: $bottonColor;
+  color: #ffffff;
+  border-style: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 2vh 0;
+}
+
 .chart-card {
   background: tan;
   border-radius: 6px;
