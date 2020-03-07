@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ count }}
     <client-only>
       <line-chart :chartData="chartData" :options="chartOptions"></line-chart>
     </client-only>
@@ -7,26 +8,28 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-
+import _ from "lodash";
 export default {
   data() {
     return {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false
-      },
-      time: 0
+      }
     };
   },
-
   mounted() {
-    setInterval(() => {
-      this.time++;
+    if (!_.isEmpty(interval)) return;
+
+    let interval = setInterval(() => {
+      this.$store.commit("decrementCount", interval);
     }, 1000);
   },
   computed: {
     ...mapGetters({
-      chartData: "chartData"
+      chartData: "chartData",
+      count: "count",
+      interval: "interval"
     })
   }
 };
