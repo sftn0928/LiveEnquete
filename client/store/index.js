@@ -24,9 +24,10 @@ export const state = () => ({
   liveId: "",
   pageId: "",
   socket: "",
-  collects: collectsInter,
+  collects: {},
   count: "",
-  interval: ""
+  interval: "",
+  stop: false
 });
 
 export const mutations = {
@@ -53,6 +54,7 @@ export const mutations = {
   SET_URL(state, payLord) {},
   getData(state, message) {
     if (_.isEmpty(state.collects)) return;
+    if (state.stop) return;
     let time = Math.floor((Date.now() - state.collects.startTime) / 1000);
     state.collects.labels = Array.from(new Array(time), (v, i) => i);
     state.collects.datasets.forEach(value => {
@@ -68,26 +70,19 @@ export const mutations = {
     });
     state.collects = Object.assign({}, state.collects);
   },
-  countSet(state, count) {
-    let [minute, second] = count;
-    console.log(minute, second, count);
-    if (minute === "∞") {
-      state.count = ["∞", "∞"];
-    } else {
-      state.count = [minute, second];
-      console.log(state.count);
+  countSet(state, time) {
+    if (time !== "∞") {
+      state.count = Date.now() + time * 1000;
     }
   },
   decrementCount(state, interval) {
     state.interval = interval;
-    const [minute, second] = state.count;
-    if (minute !== "∞") {
-      let sum = Number(minute) * 60 + Number(second);
-      if (sum > 0) {
-        sum--;
-        state.count = [Math.floor(sum / 60), sum % 60];
-      }
-    }
+  },
+  collectStop(state) {
+    state.stop = true;
+  },
+  collectRestart(state) {
+    state.stop = false;
   }
 };
 
@@ -95,8 +90,9 @@ export const getters = {
   liveId: state => state.liveId,
   pageId: state => state.pageId,
   isPageId: state => !Lang.isEmpty(state.pageId),
-  interval: state => interval,
-  chartData: state => {
+  interval: state => state.interval,
+  stop: state => state.stop,
+  chartDataLine: state => {
     const data = state.collects;
     return {
       labels: data.labels,
@@ -110,7 +106,7 @@ export const getters = {
       })
     };
   },
-  count: state => `${state.count[0]}:${state.count[1]}`
+  count: state => state.count
 };
 
 export const actions = {

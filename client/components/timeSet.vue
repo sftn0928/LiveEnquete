@@ -38,16 +38,19 @@ export default {
     finish() {
       const minute = this.$refs.minute.value;
       const second = this.$refs.second.value;
+
+      const time =
+        minute === "∞" ? minute : Number(minute) * 60 + Number(second);
       return [minute, second].every(v => v === 0)
         ? setAlert("時間を指定してください")
-        : this.goResult(minute, second);
+        : this.goResult(time);
     },
     setAlert(str) {
       this.alert = str;
     },
-    goResult(minute, second) {
+    goResult(time) {
       this.$emit("finishTimeSet");
-      this.$store.commit("countSet", [minute, second]);
+      this.$store.commit("countSet", time);
     }
   }
 };
