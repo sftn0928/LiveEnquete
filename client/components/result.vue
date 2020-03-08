@@ -15,7 +15,8 @@
         RESTART
       </button>
     </div>
-    <button @click="switchChart()">円グラフの表示</button>
+    <button @click="switchChart()" v-if="isPieBtn == false" >円グラフの表示</button>
+    <button @click="switchChart()" v-if="isLineBtn" >折れ線グラフの表示</button>
     <div>
       <client-only>
         <lineChart
@@ -42,6 +43,8 @@ export default {
     return {
       isPie: false,
       isLine: false,
+      isPieBtn: false,
+      isLineBtn: false,
       interval: "",
       time: ""
     };
@@ -91,6 +94,8 @@ export default {
     switchChart(){
       this.isPie = !this.isPie;
       this.isLine = !this.isLine;
+      this.isPieBtn = !this.isPieBtn;
+      this.isLineBtn = !this.isLineBtn;
     },
     props: {
 
