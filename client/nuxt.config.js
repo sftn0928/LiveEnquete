@@ -71,8 +71,7 @@ module.exports = {
    */
   axios: {
     host: "server",
-    port: 3001,
-    proxy: true
+    port: 3001
   },
   proxy: {
     "/api": {
