@@ -27,7 +27,7 @@ export default {
     },
     connect(Id) {
       this.$store.commit("SET_URL", Id);
-    }
+    },
   },
   watch: {
     isSetURL() {

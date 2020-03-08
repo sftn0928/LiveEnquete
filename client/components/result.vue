@@ -3,7 +3,9 @@
     {{ count }}
     <client-only>
       <line-chart :chartData="chartData" :options="chartOptions"></line-chart>
+      <Doughnut-chart :chartData="chartData" :options="chartOptions"></Doughnut-chart>
     </client-only>
+
   </div>
 </template>
 <script>
@@ -14,13 +16,12 @@ export default {
     return {
       chartOptions: {
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
       }
     };
   },
   mounted() {
     if (!_.isEmpty(interval)) return;
-
     let interval = setInterval(() => {
       this.$store.commit("decrementCount", interval);
     }, 1000);

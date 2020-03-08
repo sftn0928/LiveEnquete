@@ -10,9 +10,9 @@
         >
           <input
             type="text"
-            @change="changeInput($event, index)"
+            @keydown.enter="addFrame()"
+            @input="changeInput($event, index)"
             :value="val"
-            @keyup.enter="addFrame"
             class="comment-frame new-frame"
           />
           <div
@@ -49,7 +49,7 @@ export default {
   },
 
   methods: {
-    addFrame(event) {
+    addFrame() {
       this.items.push(this.item);
     },
     changeInput(event, index) {
@@ -57,7 +57,7 @@ export default {
     },
     deleteInput(index) {
       this.items.splice(index, 1);
-    }
+    },
   },
   watch: {
     items() {

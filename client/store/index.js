@@ -24,7 +24,7 @@ export const state = () => ({
   liveId: "",
   pageId: "",
   socket: "",
-  collects: collectsInter,
+  collects: {},
   count: "",
   interval: ""
 });
@@ -120,3 +120,12 @@ export const actions = {
     }
   }
 };
+
+// 半角 -> 全角
+
+// function zenkakuHankaku(str) {
+//   return str.replace(/[A-Za-z0-9]/g, function(s) {
+//       return String.fromCharCode(s.charCodeAt(0) + 0xFEE0);
+//   });
+// }
+// console.log(zenkakuHankaku("12zxsDSF"))
