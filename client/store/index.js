@@ -5,6 +5,12 @@ import socketCreatePlugins from "@/plugins/createSocket";
 const socketPlugins = socketCreatePlugins(io());
 export const plugins = [socketPlugins];
 
+function zenkakuHankaku(str) {
+  return str.replace(/[A-Za-z0-9]/g, function(s) {
+   return String.fromCharCode(s.charCodeAt(0) + 0xFEE0);
+  });
+}
+
 let datasetsInter = {
   data: [],
   sum: "",
@@ -53,7 +59,7 @@ export const mutations = {
       return {
         sum: 0,
         data: [],
-        label: value,
+        label: zenkakuHankaku(value),
         backgroundColor: `hsla(0, 100%, 100%, 0)`,
         borderColor: `hsla(${index * 30}, 100%, 60%, 1)`
       };
@@ -62,13 +68,14 @@ export const mutations = {
   getData(state, message) {
     if (_.isEmpty(state.collects)) return;
     if (state.isCollectStop) return;
+    let changeMessage = zenkakuHankaku(message);
     let time = Math.floor(
       (Date.now() - state.betweenTime - state.collects.startTime) / 1000
     );
     console.log(time);
     state.collects.labels = Array.from(new Array(time), (v, i) => i);
     state.collects.datasets.forEach(value => {
-      if (message.includes(value.label)) {
+      if (changeMessage.includes(value.label)) {
         value.sum++;
       }
       const length = value.data.length - 1;
