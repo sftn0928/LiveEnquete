@@ -22,7 +22,11 @@ export default {
             boxWidth: 40,
             fontSize: 12
           }
-        }
+        },
+        tooltips: {
+          mode: "index",
+          xPadding: 50
+        },
       }
     }
   },

@@ -60,7 +60,7 @@ export default {
         },
         tooltips: {
           mode: "index",
-          xPadding: 50
+          xPadding: 50,
         },
         scales: {
           xAxes: [{
@@ -170,13 +170,4 @@ export default {
   color: $textColor;
 }
 
-.chart-card {
-  background: tan;
-  border-radius: 6px;
-  width: 25%;
-}
-
-.ct-series-a .ct-bar {
-  stroke-width: 50px;
-}
 </style>
