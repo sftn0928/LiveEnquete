@@ -21,10 +21,7 @@
           :chartData="chartDataLine"
           :options="chartOptions"
         ></line-chart>
-        <Doughnut-chart
-          :chartData="chartData"
-          :options="chartOptions">
-        </Doughnut-chart>
+        <pieChart v-if="isPie" />
       </client-only>
     </div>
     <div v-for="(data, index) in rate" :key="index">
@@ -35,10 +32,12 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import pieChart from "~/components/pieChart"
 import _ from "lodash";
 export default {
   data() {
     return {
+      isPie: true,
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
@@ -87,6 +86,9 @@ export default {
   mounted() {
     this.StartInterval();
   },
+  components: {
+    pieChart
+  },
   destroy() {
     clearInterval(this.interval);
   },
@@ -96,8 +98,12 @@ export default {
       count: "count",
       isCollect: "stop",
       rate: "rateData",
-      sum: "sumData"
-    })
+      sum: "sumData",
+    }),
+    showpie(){
+      if (this.time === 0)
+      this.isPie = !this.isPie;
+    }
   },
   methods: {
     collectStop() {
@@ -127,9 +133,6 @@ export default {
 };
 </script>
 <style lang="scss">
-.result-container {
-  height: calc(100vh - #{$headerHeight});
-}
 
 .timer-view {
   display: flex;

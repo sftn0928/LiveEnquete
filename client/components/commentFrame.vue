@@ -49,16 +49,15 @@ export default {
   },
 
   methods: {
-    addFrame() {
+    addFrame(event) {
       this.items.push(this.item);
     },
     changeInput(event, index) {
-      console.log(event.target.value);
       this.items.splice(index, 1, event.target.value);
     },
     deleteInput(index) {
       this.items.splice(index, 1);
-    },
+    }
   },
   watch: {
     items() {

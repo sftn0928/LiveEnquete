@@ -1,9 +1,9 @@
 import Vue from "vue";
-import { Doughnut, mixins } from "vue-chartjs";
+import { Pie, mixins } from "vue-chartjs";
 const { reactiveProp } = mixins;
 
-Vue.component("Doughnut-chart", {
-  extends: Doughnut,
+Vue.component("pie-chart", {
+  extends: Pie,
   mixins: [reactiveProp],
   props: ["options"],
   mounted() {

@@ -123,6 +123,16 @@ export const getters = {
       })
     };
   },
+  chartDataPie: state => {
+    const data = state.collects;
+    return {
+      labels: data.datasets.map(v => v.label ),
+      datasets: [{
+         data: data.datasets.map(v => v.sum ),
+         backgroundColor: data.datasets.map(v => v.borderColor ),
+      }]
+    }
+  },
   count: state => state.count,
   rateData: state => {
     const data = state.collects;
