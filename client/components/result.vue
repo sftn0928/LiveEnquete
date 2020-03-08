@@ -44,7 +44,7 @@ export default {
           labels: {
             padding: 25,
             boxWidth: 40,
-            fontSize: 10
+            fontSize: 12
           }
         },
         layout: {
