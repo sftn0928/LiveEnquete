@@ -15,12 +15,12 @@
         RESTART
       </button>
     </div>
+    <button @click="switchChart()">円グラフの表示</button>
     <div>
       <client-only>
-        <line-chart
-          :chartData="chartDataLine"
-          :options="chartOptions"
-        ></line-chart>
+        <lineChart
+        :chartData="chartDataLine"
+        v-if="isLine == false" />
         <pieChart v-if="isPie" />
       </client-only>
     </div>
@@ -35,10 +35,12 @@
 <script>
 import { mapGetters } from "vuex";
 import pieChart from "~/components/pieChart"
+import lineChart from "~/components/lineChart"
 import _ from "lodash";
 export default {
   data() {
     return {
+<<<<<<< HEAD
       isPie: true,
       chartOptions: {
         responsive: true,
@@ -77,6 +79,10 @@ export default {
           }]
       }
       },
+=======
+      isPie: false,
+      isLine: false,
+>>>>>>> c8ccae0e100619a2c32310eb806f97cbaf3f55b8
       interval: "",
       time: ""
     };
@@ -85,7 +91,8 @@ export default {
     this.StartInterval();
   },
   components: {
-    pieChart
+    pieChart,
+    lineChart
   },
   destroy() {
     clearInterval(this.interval);
@@ -98,10 +105,6 @@ export default {
       rate: "rateData",
       sum: "sumData",
     }),
-    showpie(){
-      if (this.time === 0)
-      this.isPie = !this.isPie;
-    }
   },
   methods: {
     collectStop() {
@@ -125,6 +128,13 @@ export default {
     collectRestart() {
       this.$store.commit("collectRestart");
       this.StartInterval();
+    },
+    switchChart(){
+      this.isPie = !this.isPie;
+      this.isLine = !this.isLine;
+    },
+    props: {
+
     },
     setTime() {}
   }
