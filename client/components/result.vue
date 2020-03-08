@@ -1,10 +1,11 @@
 <template>
   <div class="result-container">
-    <div v-if="count !== '∞'" class="timer-view">
+    <div class="switching-container">
+      <div v-if="count !== '∞'" class="timer-view">
       {{ time }}
     </div>
-    <div v-if="count === '∞'" class="switching-container">
-      <button
+      <div v-if="count === '∞'">
+        <button
         @click="collectStop"
         v-if="isCollect === false"
         class="switching-button"
@@ -14,8 +15,11 @@
       <button @click="collectRestart" v-if="isCollect" class="switching-button">
         RESTART
       </button>
-      <button @click="switchChart()" class="switching-button">円グラフの表示</button>
+      </div>
+      <button @click="switchChart()" v-if="isPieBtn == false" class="switching-button">円グラフ</button>
+      <button @click="switchChart()" v-if="isLineBtn" class="switching-button">折れ線グラフ</button>
     </div>
+    
     <div>
       <client-only>
         <lineChart
@@ -42,6 +46,8 @@ export default {
     return {
       isPie: false,
       isLine: false,
+      isPieBtn: false,
+      isLineBtn: false,
       interval: "",
       time: ""
     };
@@ -91,6 +97,8 @@ export default {
     switchChart(){
       this.isPie = !this.isPie;
       this.isLine = !this.isLine;
+      this.isPieBtn = !this.isPieBtn;
+      this.isLineBtn = !this.isLineBtn;
     },
     props: {
 
@@ -108,7 +116,7 @@ export default {
   justify-content: center;
   font-size: $fontSizeML;
   color: $textColor;
-  margin: 3vh;
+  margin: calc(2vh + 25px) 0 2vh;
 }
 
 .switching-container {
