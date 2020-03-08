@@ -17,12 +17,21 @@
         
       </div>
     </header>
+    
     <nuxt />
+
+    <footer>
+      <div class="footer-list">
+        <nuxt-link tag="a" to="/contact">問い合わせ・ご意見・ご要望</nuxt-link>
+      </div>
+      <div class="copyright">Copyright © 2020 teamASK </div>
+    </footer>
   </div>
 </template>
 
 <style lang="scss">
 .header-wrapper {
+  width: 100%;
   height: $headerHeight;
   background-color: #707070;
   display: flex;
@@ -50,5 +59,29 @@
 
 .registered{
   display: block;
+}
+
+footer{
+  width: 100%;
+  height: 25vh;
+  background: #707070;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+  .footer-list{
+    display: flex;
+    a{
+      text-decoration: none;
+      font-size: 16px;
+      color: #ffffff;
+      margin: 4vh 2em;
+    }
+  }
+  .copyright{
+    font-size: 12px;
+    margin: 4vh 0;
+  }
 }
 </style>

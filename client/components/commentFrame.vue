@@ -10,9 +10,9 @@
         >
           <input
             type="text"
-            @keydown.enter="addFrame()"
             @input="changeInput($event, index)"
             :value="val"
+            @keydown.enter="addFrame"
             class="comment-frame new-frame"
           />
           <div
@@ -23,7 +23,7 @@
             <p>×</p>
           </div>
         </div>
-        <div class="add-btn" >
+        <div class="add-btn">
           <p @click="addFrame">＋</p>
         </div>
       </div>
@@ -53,6 +53,7 @@ export default {
       this.items.push(this.item);
     },
     changeInput(event, index) {
+      console.log(event.target.value);
       this.items.splice(index, 1, event.target.value);
     },
     deleteInput(index) {

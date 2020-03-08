@@ -21,17 +21,26 @@ let collectsInter = {
 export const state = () => ({
   //セキュリティトークン
   csrfToken: "",
+  authUser: null,
   liveId: "",
   pageId: "",
   socket: "",
   collects: {},
   count: "",
-  interval: ""
+  interval: "",
+  isCollectStop: false,
+  isCollect: false,
+  betweenTime: 0,
+  betweenTimeStart: 0
 });
 
 export const mutations = {
   SET_CSRF_TOKEN(state, csrfToken) {
     state.csrfToken = csrfToken;
+  },
+  SET_URL(state, payLord) {},
+  SET_USER: function(state, user) {
+    state.authUser = user;
   },
   setLiveURL(state, URL) {
     const parseURL = URL.match(/watch\?v=([A-Za-z0-9-/:-@\[-~/-]{11})/);
@@ -45,15 +54,18 @@ export const mutations = {
         sum: 0,
         data: [],
         label: value,
-        backgroundColor: `hsla(0, 0, 0, 0)`,
+        backgroundColor: `hsla(0, 100%, 100%, 0)`,
         borderColor: `hsla(${index * 30}, 100%, 60%, 1)`
       };
     });
   },
-  SET_URL(state, payLord) {},
   getData(state, message) {
     if (_.isEmpty(state.collects)) return;
-    let time = Math.floor((Date.now() - state.collects.startTime) / 1000);
+    if (state.isCollectStop) return;
+    let time = Math.floor(
+      (Date.now() - state.betweenTime - state.collects.startTime) / 1000
+    );
+    console.log(time);
     state.collects.labels = Array.from(new Array(time), (v, i) => i);
     state.collects.datasets.forEach(value => {
       if (message.includes(value.label)) {
@@ -68,26 +80,23 @@ export const mutations = {
     });
     state.collects = Object.assign({}, state.collects);
   },
-  countSet(state, count) {
-    let [minute, second] = count;
-    console.log(minute, second, count);
-    if (minute === "∞") {
-      state.count = ["∞", "∞"];
-    } else {
-      state.count = [minute, second];
-      console.log(state.count);
-    }
+  countSet(state, time) {
+    state.isCollect = true;
+    if (time !== "∞") {
+      state.count = Date.now() + time * 1000;
+    } else state.count = time;
   },
   decrementCount(state, interval) {
     state.interval = interval;
-    const [minute, second] = state.count;
-    if (minute !== "∞") {
-      let sum = Number(minute) * 60 + Number(second);
-      if (sum > 0) {
-        sum--;
-        state.count = [Math.floor(sum / 60), sum % 60];
-      }
-    }
+  },
+  collectStop(state) {
+    state.isCollectStop = true;
+    state.betweenTimeStart = Date.now();
+  },
+  collectRestart(state) {
+    state.isCollectStop = false;
+    state.betweenTime = state.betweenTime + Date.now() - state.betweenTimeStart;
+    console.log(state.betweenTime);
   }
 };
 
@@ -95,8 +104,10 @@ export const getters = {
   liveId: state => state.liveId,
   pageId: state => state.pageId,
   isPageId: state => !Lang.isEmpty(state.pageId),
-  interval: state => interval,
-  chartData: state => {
+  interval: state => state.interval,
+  stop: state => state.isCollectStop,
+  isCollect: state => state.isCollect,
+  chartDataLine: state => {
     const data = state.collects;
     return {
       labels: data.labels,
@@ -105,19 +116,46 @@ export const getters = {
           label: v.label,
           data: v.data,
           borderColor: v.borderColor,
-          backgroundColor: v.backgroundColor
+          backgroundColor: v.backgroundColor,
+          pointRadius: 0,
+          lineTension: 0
         };
       })
     };
   },
-  count: state => `${state.count[0]}:${state.count[1]}`
+  count: state => state.count,
+  rateData: state => {
+    const data = state.collects;
+    return data.datasets.map(value => {
+      return {
+        name: value.label,
+        sum: value.sum
+      };
+    });
+  },
+  sumData: state => {
+    const data = state.collects;
+    return data.datasets.reduce((sum, cu) => sum + cu.sum, 0);
+  }
 };
 
 export const actions = {
   nextServerInit({ commit }, { req }) {
-    if (req.cookies) {
-      commit("SET_CSRF_TOKEN", req.csrfToken());
+    if (req.session && req.session.authUser) {
+      commit("SET_USER", req.session.authUser);
     }
+  },
+
+  async login({ commit }, { user }) {
+    commit("SET_USER", user);
+
+    await axios.post("/session/login", { authUser: user });
+  },
+
+  async logout({ commit }) {
+    commit("SET_USER", null);
+
+    await axios.post("/session/logout");
   }
 };
 

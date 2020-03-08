@@ -8,7 +8,6 @@
 import resultComponent from "~/components/result";
 import collectComponent from "~/components/collectChat";
 import setURLComponent from "~/components/setURL";
-
 export default {
   components: {
     collectComponent,
@@ -31,8 +30,16 @@ export default {
   },
   watch: {
     isSetURL() {
-      const Id = this.liveId ? { liveId: this.liveId } : "";
-      this.connect(Id);
+      if (!this.$store.state.isCollect) {
+        const Id = this.liveId ? { liveId: this.liveId } : "";
+        this.connect(Id);
+      }
+    }
+  },
+  mounted() {
+    console.log(this.$store.state.isCollect);
+    if (this.$store.state.isCollect) {
+      this.isSetURL = true;
     }
   }
 };

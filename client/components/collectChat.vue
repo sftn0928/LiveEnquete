@@ -27,10 +27,16 @@ export default {
       this.collection.push(this.collectData);
     },
     hideFrameTime() {
-      this.isStart = !this.isStart;
-      const items = this.$refs.comment.items.filter(v => v);
+      const items = this.$refs.comment.items.filter(v => !_.isEmpty(v));
+      console.log(items);
       if (_.isEmpty(items)) return;
       this.$store.commit("startCollect", this.$refs.comment.items);
+      this.isStart = !this.isStart;
+    }
+  },
+  mounted() {
+    if (this.$store.state.isCollect) {
+      this.isStart = true;
     }
   }
 };
