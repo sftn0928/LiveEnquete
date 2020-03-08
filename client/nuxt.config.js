@@ -59,7 +59,8 @@ module.exports = {
     "@nuxtjs/axios",
     "@nuxtjs/pwa",
     "@nuxtjs/style-resources",
-    "@nuxtjs/proxy"
+    "@nuxtjs/proxy",
+    "@nuxtjs/auth"
   ],
   styleResources: {
     scss: ["~/assets/scss/variable.scss"]
@@ -69,13 +70,9 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    browserBaseURL: process.env.BASE_APP_URL || "/",
-    requestInterceptor(config, { store }) {
-      if (store.state.csrfToken) {
-        config.headers.common["x-csrf-token"] = store.state.csrfToken;
-      }
-      return config;
-    }
+    host: "server",
+    port: 3001,
+    proxy: true
   },
   proxy: {
     "/api": {
@@ -94,16 +91,5 @@ module.exports = {
      */
     vendor: ["socket.io-client"],
     extend(config, ctx) {}
-  },
-  serverMiddleware: [
-    express.json(),
-    expressSession({
-      secret: "super-secret-key",
-      resave: false,
-      saveUninitialized: false,
-      cookie: { maxAge: 60000 }
-    }),
-    // Api middleware
-    "~/server/session.js"
-  ]
+  }
 };

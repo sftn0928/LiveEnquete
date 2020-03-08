@@ -1,6 +1,9 @@
 import _ from "lodash";
 import io from "socket.io-client";
 import socketCreatePlugins from "@/plugins/createSocket";
+import axios from "@nuxtjs/axios";
+
+const cookieparser = process.server ? require("cookieparser") : undefined;
 
 const socketPlugins = socketCreatePlugins(io());
 export const plugins = [socketPlugins];
@@ -39,7 +42,7 @@ export const mutations = {
     state.csrfToken = csrfToken;
   },
   SET_URL(state, payLord) {},
-  SET_USER: function(state, user) {
+  SET_USER(state, user) {
     state.authUser = user;
   },
   setLiveURL(state, URL) {
@@ -136,14 +139,31 @@ export const getters = {
   sumData: state => {
     const data = state.collects;
     return data.datasets.reduce((sum, cu) => sum + cu.sum, 0);
-  }
+  },
+  isLogin: state => !_.isEmpty(state.authUser),
+  userURL: state => `/${state.authUser.id}/User`
 };
 
 export const actions = {
-  nextServerInit({ commit }, { req }) {
-    if (req.session && req.session.authUser) {
-      commit("SET_USER", req.session.authUser);
+  async nuxtServerInit({ commit }, { app, req, redirect }) {
+    let auth = null;
+    if (req.headers.cookie) {
+      const parsed = cookieparser.parse(req.headers.cookie);
+      try {
+        // console.log(parsed);
+        if (parsed.jwt !== undefined) {
+          // auth = JSON.parse(parsed.jwt);
+          const id = await app.$axios.get("http://server:3001/getId", {
+            headers: { "set-cookie": "jwt" }
+          });
+          console.log(id.data, "this is Id");
+          auth = id.data;
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
+    commit("SET_USER", auth);
   },
 
   async login({ commit }, { user }) {

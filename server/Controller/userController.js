@@ -4,15 +4,17 @@ const _ = require('lodash');
 const { Maybe, Either } = require('../library/monads');
 const passport = require('passport');
 const { checkSchema, validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
 
 console.log(typeof checkSchema);
 const isNext = (next, monad, obj) => {
   return _.isEmpty(next) ? monad(obj) : next();
 };
+const fs = require('fs');
 
 const flashMonad = (key, monad, obj, message) => {
   if (typeof obj === 'object') {
-    obj.res.cookie()
+    obj.res.cookie();
     isNext(obj.next, monad, obj);
   }
 };
@@ -141,6 +143,7 @@ module.exports = {
       next(new Error('Invalid API token!!'));
     }
   }
+
   // csrfCreate(req, res) {
   //   let secret = tokens.secretSync();
   //   let token = tokens.create(secret);

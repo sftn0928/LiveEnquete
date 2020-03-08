@@ -23,6 +23,7 @@
 <script>
 import axios from "axios";
 import myAxios from "@/plugins/myAxios";
+import Cookie from "js-cookie";
 export default {
   data() {
     return {
@@ -31,15 +32,16 @@ export default {
     };
   },
   methods: {
-    login() {
-      console.log("Login");
+    async login() {
       myAxios
         .post("/api/login", {
           email: this.email,
           password: this.password
         })
         .then(val => {
-          this.$router.push(`/${val.data}/User`);
+          this.$router.push(`/${val.data.id}/User`);
+          console.log(val.data.id);
+          // Cookie.set("jws", val.data.token, { expires: 7 });
         })
         .catch(err => {
           console.log(err);
@@ -47,13 +49,13 @@ export default {
         });
     }
   }
-  //   asyncData({ app, params, store }) {
-  //     const data = { key: "value" };
-  //     return axios.get("http://server:3001/login").then(res => {
-  //       console.log(res);
-  //       return { title: res.data.title };
-  //     });
-  //   }
+  // asyncData({ app, params, store, $axios }) {
+  //   const data = { key: "value" };
+  //   return myAxios.getCommon("login").then(res => {
+  //     console.log(res.data);
+  //     return { title: res.data.title };
+  //   });
+  // }
 };
 </script>
 
