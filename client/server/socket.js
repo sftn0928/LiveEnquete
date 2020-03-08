@@ -24,18 +24,20 @@ exports.socketConnect = LiveChat => socket => {
     Live = new LiveChat(Id);
     console.log(Id);
     Live.on("error", err => {
-      console.log(err);
+      // console.log(err);
+      loggerError(err);
     });
 
     Live.on("start", liveId => {
-      console.log(liveId);
+      console.log(liveId, "liveStart");
     });
     Live.on("end", reason => {
-      console.log(reason);
+      console.log(reason, "LiveEnd");
     });
     Live.on("comment", comment => {
       fs.writeFileSync("comment.txt", comment.message);
       logger.debug(comment.message);
+      console.log(comment.message[0].text);
       socket.emit("emitComment", comment.message[0].text);
     });
     Live.start();

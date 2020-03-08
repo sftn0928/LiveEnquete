@@ -27,7 +27,9 @@ export default {
       this.collection.push(this.collectData);
     },
     hideFrameTime() {
-      const items = this.$refs.comment.items.filter(v => !_.isEmpty(v));
+      const items = this.$refs.comment.items
+        .filter(v => !_.isEmpty(v))
+        .filter(v => v !== undefined);
       console.log(items);
       if (_.isEmpty(items)) return;
       this.$store.commit("startCollect", this.$refs.comment.items);

@@ -4,9 +4,15 @@ import socketCreatePlugins from "@/plugins/createSocket";
 import axios from "@nuxtjs/axios";
 
 const cookieparser = process.server ? require("cookieparser") : undefined;
-
+import Cookies from "js-cookie";
 const socketPlugins = socketCreatePlugins(io());
 export const plugins = [socketPlugins];
+
+function zenkakuHankaku(str) {
+  return str.replace(/[A-Za-z0-9]/g, function(s) {
+    return String.fromCharCode(s.charCodeAt(0) + 0xfee0);
+  });
+}
 
 let datasetsInter = {
   data: [],
@@ -24,7 +30,6 @@ let collectsInter = {
 export const state = () => ({
   //セキュリティトークン
   csrfToken: "",
-  authUser: null,
   liveId: "",
   pageId: "",
   socket: "",
@@ -34,7 +39,11 @@ export const state = () => ({
   isCollectStop: false,
   isCollect: false,
   betweenTime: 0,
-  betweenTimeStart: 0
+  betweenTimeStart: 0,
+
+  // FromServer
+  authUser: {},
+  commentFrame: [{}]
 });
 
 export const mutations = {
@@ -56,7 +65,7 @@ export const mutations = {
       return {
         sum: 0,
         data: [],
-        label: value,
+        label: zenkakuHankaku(value),
         backgroundColor: `hsla(0, 100%, 100%, 0)`,
         borderColor: `hsla(${index * 30}, 100%, 60%, 1)`
       };
@@ -65,13 +74,14 @@ export const mutations = {
   getData(state, message) {
     if (_.isEmpty(state.collects)) return;
     if (state.isCollectStop) return;
+    let changeMessage = zenkakuHankaku(message);
     let time = Math.floor(
       (Date.now() - state.betweenTime - state.collects.startTime) / 1000
     );
     console.log(time);
     state.collects.labels = Array.from(new Array(time), (v, i) => i);
     state.collects.datasets.forEach(value => {
-      if (message.includes(value.label)) {
+      if (changeMessage.includes(value.label)) {
         value.sum++;
       }
       const length = value.data.length - 1;
@@ -100,6 +110,34 @@ export const mutations = {
     state.isCollectStop = false;
     state.betweenTime = state.betweenTime + Date.now() - state.betweenTimeStart;
     console.log(state.betweenTime);
+  },
+  logout(state) {
+    state.authUser = {};
+    Cookies.remove("jwt");
+  },
+  login(state, auth) {
+    console.log(auth);
+    state.authUser = auth;
+  },
+
+  //common server data
+  createSlot(state, items) {
+    state.commentFrame.push(items);
+  },
+  deleteSlot(state, index) {
+    state.commentFrame.splice(index, 1);
+  },
+  updateSlot(state, arrItem) {
+    let [item, index] = arrItem;
+    state.commentFrame.splice(index, 1, item);
+  },
+  createChart(title) {
+    let obj = {
+      title: title,
+      collects: JSON.stringify(state.collects),
+      id: state.authUser.id
+    };
+    axios.post("/api/chartCreate");
   }
 };
 
@@ -129,12 +167,14 @@ export const getters = {
   chartDataPie: state => {
     const data = state.collects;
     return {
-      labels: data.datasets.map(v => v.label ),
-      datasets: [{
-         data: data.datasets.map(v => v.sum ),
-         backgroundColor: data.datasets.map(v => v.borderColor ),
-      }]
-    }
+      labels: data.datasets.map(v => v.label),
+      datasets: [
+        {
+          data: data.datasets.map(v => v.sum),
+          backgroundColor: data.datasets.map(v => v.borderColor)
+        }
+      ]
+    };
   },
   count: state => state.count,
   rateData: state => {
@@ -191,9 +231,4 @@ export const actions = {
 
 // 半角 -> 全角
 
-// function zenkakuHankaku(str) {
-//   return str.replace(/[A-Za-z0-9]/g, function(s) {
-//       return String.fromCharCode(s.charCodeAt(0) + 0xFEE0);
-//   });
-// }
 // console.log(zenkakuHankaku("12zxsDSF"))

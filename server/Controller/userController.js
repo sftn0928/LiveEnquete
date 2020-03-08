@@ -24,10 +24,10 @@ const flashRight = _.curry(flashMonad, 'success', Maybe.just);
 
 let getUserParams = req => {
   return {
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    channelURL: req.body.channelURL
+    name: req.name,
+    email: req.email,
+    password: req.password,
+    channelURL: req.channelURL
   };
 };
 
@@ -39,7 +39,7 @@ module.exports = {
   create(req, res, next) {
     if (req.skip) next();
 
-    let newUser = new User(getUserParams(req));
+    let newUser = new User(getUserParams(req.body));
     console.log(newUser);
     User.register(newUser, req.body.password, (error, user) => {
       let obj = {
@@ -71,10 +71,11 @@ module.exports = {
   },
   update(req, res, next) {
     let userId = req.params.Id;
-    userParams = {
+    let userParams = {
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      channelURL: req.body.channelURL
     };
     User.findOneAndUpdate(userId, {
       $set: userParams

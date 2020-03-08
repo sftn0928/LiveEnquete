@@ -6,13 +6,14 @@
         <!-- 未変更時点では<div class="unregistered">が真ん中に表示されている
         　　　どちらかをdisplay:none;にすると両端によります -->
         <!-- 未ログイン時 -->
-        <div class="unregistered" v-if="!$store.getters.isLogin">
-          <nuxt-link tag="a" to="createuser">新規登録</nuxt-link>
+        <div class="unregistered" v-if="!isLogin">
+          <nuxt-link tag="a" to="/createuser">新規登録</nuxt-link>
           <nuxt-link tag="a" to="/login">ログイン</nuxt-link>
         </div>
         <!-- ログイン時 -->
-        <div class="registered" v-if="$store.getters.isLogin">
+        <div class="registered" v-if="isLogin">
           <nuxt-link :to="userURL">{{ user.name }}</nuxt-link>
+          <div @click="logout">ログアウト</div>
         </div>
       </div>
     </header>
@@ -35,8 +36,15 @@ export default {
       user: "authUser"
     }),
     ...mapGetters({
-      userURL: "userURL"
+      userURL: "userURL",
+      isLogin: "isLogin"
     })
+  },
+  methods: {
+    logout() {
+      this.$router.push("/");
+      this.$store.commit("logout");
+    }
   }
 };
 </script>

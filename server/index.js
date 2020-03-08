@@ -17,6 +17,9 @@ const privatekey = fs.readFileSync(__dirname + '/assets/keys/private.key', {
   encoding: 'utf8'
 });
 
+const slotController = require('./Controller/slotController');
+const chartController = require('./Controller/chartController');
+
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: privatekey,
@@ -52,6 +55,9 @@ mongoose.set('useCreateIndex', true);
 // );
 
 // app.use(userController.verifyToken);
+let commonSend = (req, res) => {
+  res.send(req.body);
+};
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -123,7 +129,8 @@ app.post('/login', userController.authenticate, (req, res) => {
   res.cookie('jwt', token, { maxAge: 6000000, httpOnly: false });
   res.json({
     success: true,
-    id: req.user._id
+    ...payload,
+    channelId: req.user.channelId
   });
 });
 
@@ -163,6 +170,16 @@ app.get(
 app.get('/id/:id/User', userController.show);
 
 app.post('/createUser', userController.create);
+
+app.get('/id/:id/slot', slotController.show);
+app.post('/slotCreate', slotController.create, commonSend);
+app.post('/slotUpdate', slotController.update, commonSend);
+app.post('/slotDelete', slotController.delete, commonSend);
+
+app.get('/id/:id/chart', chartController.show);
+app.post('/chartCreate', chartController.create, commonSend);
+app.post('/chartUpdate', chartController.update, commonSend);
+app.post('/chartDelete', chartController.delete, commonSend);
 
 app.listen(app.get('port'), () => {
   console.log(`Server running at http://localhost:${app.get('port')}`);
