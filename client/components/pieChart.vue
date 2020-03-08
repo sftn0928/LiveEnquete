@@ -16,6 +16,13 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        legend: {
+          labels: {
+            padding: 25,
+            boxWidth: 40,
+            fontSize: 12
+          }
+        }
       }
     }
   },
