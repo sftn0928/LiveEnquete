@@ -45,6 +45,10 @@ module.exports = {
     {
       src: "@/plugins/line.js",
       mode: "client"
+    },
+    {
+      src: "@/plugins/pie.js",
+      mode: "client"
     }
   ],
   /*
