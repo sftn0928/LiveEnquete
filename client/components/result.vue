@@ -121,9 +121,12 @@ export default {
 };
 </script>
 <style lang="scss">
+<<<<<<< HEAD
 .result-container {
   height: calc(100vh - #{$headerHeight});
 }
+=======
+>>>>>>> 22b214ca1cbdbc3705d9ac3a4f59ec895d097134
 .timer-view {
   display: flex;
   justify-content: center;
@@ -156,8 +159,13 @@ export default {
   align-items: center;
 }
 
+<<<<<<< HEAD
 .result-data {
   margin: 2em;
+=======
+.result-data{
+  margin: 6vh 2em 10vh;
+>>>>>>> 22b214ca1cbdbc3705d9ac3a4f59ec895d097134
   font-size: 15px;
   color: $textColor;
 }
