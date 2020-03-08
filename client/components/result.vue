@@ -14,8 +14,8 @@
       <button @click="collectRestart" v-if="isCollect" class="switching-button">
         RESTART
       </button>
+      <button @click="switchChart()" class="switching-button">円グラフの表示</button>
     </div>
-    <button @click="switchChart()">円グラフの表示</button>
     <div>
       <client-only>
         <lineChart
@@ -40,49 +40,8 @@ import _ from "lodash";
 export default {
   data() {
     return {
-<<<<<<< HEAD
-      isPie: true,
-      chartOptions: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          labels: {
-            padding: 25,
-            boxWidth: 40,
-            fontSize: 12
-          }
-        },
-        layout: {
-          padding: {
-            left: 50,
-            right: 50,
-            top: 0,
-            bottom: 0
-          }
-        },
-        tooltips: {
-          mode: "index",
-          xPadding: 50,
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              autoSkip: true,
-              maxTicksLimit: 30 //値の最大表示数
-            },
-          }],
-          yAxes: [{
-            ticks: {
-              autoSkip: true,
-              maxTicksLimit: 6 //値の最大表示数
-            },
-          }]
-      }
-      },
-=======
       isPie: false,
       isLine: false,
->>>>>>> c8ccae0e100619a2c32310eb806f97cbaf3f55b8
       interval: "",
       time: ""
     };
@@ -141,7 +100,9 @@ export default {
 };
 </script>
 <style lang="scss">
-
+.result-container{
+  height: calc(100vh - #{$headerHeight});
+}
 .timer-view {
   display: flex;
   justify-content: center;
@@ -152,7 +113,7 @@ export default {
 
 .switching-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .switching-button {
