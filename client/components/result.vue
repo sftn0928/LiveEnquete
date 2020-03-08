@@ -15,12 +15,12 @@
         RESTART
       </button>
     </div>
+    <button @click="switchChart()">円グラフの表示</button>
     <div>
       <client-only>
-        <line-chart
-          :chartData="chartDataLine"
-          :options="chartOptions"
-        ></line-chart>
+        <lineChart
+        :chartData="chartDataLine"
+        v-if="isLine == false" />
         <pieChart v-if="isPie" />
       </client-only>
     </div>
@@ -35,48 +35,13 @@
 <script>
 import { mapGetters } from "vuex";
 import pieChart from "~/components/pieChart"
+import lineChart from "~/components/lineChart"
 import _ from "lodash";
 export default {
   data() {
     return {
-      isPie: true,
-      chartOptions: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          labels: {
-            padding: 25,
-            boxWidth: 40,
-            fontSize: 12
-          }
-        },
-        layout: {
-          padding: {
-            left: 50,
-            right: 50,
-            top: 0,
-            bottom: 0
-          }
-        },
-        tooltips: {
-          mode: "index",
-          xPadding: 50
-        },
-        scales: {
-          xAxes: [{
-            ticks: {
-              autoSkip: true,
-              maxTicksLimit: 30 //値の最大表示数
-            },
-          }],
-          yAxes: [{
-            ticks: {
-              autoSkip: true,
-              maxTicksLimit: 6 //値の最大表示数
-            },
-          }]
-      }
-      },
+      isPie: false,
+      isLine: false,
       interval: "",
       time: ""
     };
@@ -85,7 +50,8 @@ export default {
     this.StartInterval();
   },
   components: {
-    pieChart
+    pieChart,
+    lineChart
   },
   destroy() {
     clearInterval(this.interval);
@@ -98,10 +64,6 @@ export default {
       rate: "rateData",
       sum: "sumData",
     }),
-    showpie(){
-      if (this.time === 0)
-      this.isPie = !this.isPie;
-    }
   },
   methods: {
     collectStop() {
@@ -125,6 +87,13 @@ export default {
     collectRestart() {
       this.$store.commit("collectRestart");
       this.StartInterval();
+    },
+    switchChart(){
+      this.isPie = !this.isPie;
+      this.isLine = !this.isLine;
+    },
+    props: {
+
     },
     setTime() {}
   }
