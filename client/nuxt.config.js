@@ -1,6 +1,3 @@
-const express = require("express");
-const expressSession = require("express-session");
-
 module.exports = {
   mode: "universal",
   /*
@@ -59,8 +56,7 @@ module.exports = {
     "@nuxtjs/axios",
     "@nuxtjs/pwa",
     "@nuxtjs/style-resources",
-    "@nuxtjs/proxy",
-    "@nuxtjs/auth"
+    "@nuxtjs/proxy"
   ],
   styleResources: {
     scss: ["~/assets/scss/variable.scss"]
@@ -72,7 +68,7 @@ module.exports = {
   axios: {
     host: "server",
     port: 3001,
-    proxy: true
+    prefix: "/api"
   },
   proxy: {
     "/api": {

@@ -21,7 +21,8 @@ const userSchema = new Schema({
   channelUrl: {
     type: String
   },
-  slots: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Slot' }]
+  slots: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Slot' }],
+  charts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Chart' }]
 });
 
 userSchema.plugin(passportLocalMongoose, {

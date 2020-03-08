@@ -4,7 +4,7 @@ import socketCreatePlugins from "@/plugins/createSocket";
 import axios from "@nuxtjs/axios";
 
 const cookieparser = process.server ? require("cookieparser") : undefined;
-
+import Cookies from "js-cookie";
 const socketPlugins = socketCreatePlugins(io());
 export const plugins = [socketPlugins];
 
@@ -24,7 +24,6 @@ let collectsInter = {
 export const state = () => ({
   //セキュリティトークン
   csrfToken: "",
-  authUser: null,
   liveId: "",
   pageId: "",
   socket: "",
@@ -34,7 +33,11 @@ export const state = () => ({
   isCollectStop: false,
   isCollect: false,
   betweenTime: 0,
-  betweenTimeStart: 0
+  betweenTimeStart: 0,
+
+  // FromServer
+  authUser: {},
+  commentFrame: [{}]
 });
 
 export const mutations = {
@@ -100,6 +103,34 @@ export const mutations = {
     state.isCollectStop = false;
     state.betweenTime = state.betweenTime + Date.now() - state.betweenTimeStart;
     console.log(state.betweenTime);
+  },
+  logout(state) {
+    state.authUser = {};
+    Cookies.remove("jwt");
+  },
+  login(state, auth) {
+    console.log(auth);
+    state.authUser = auth;
+  },
+
+  //common server data
+  createSlot(state, items) {
+    state.commentFrame.push(items);
+  },
+  deleteSlot(state, index) {
+    state.commentFrame.splice(index, 1);
+  },
+  updateSlot(state, arrItem) {
+    let [item, index] = arrItem;
+    state.commentFrame.splice(index, 1, item);
+  },
+  createChart(title) {
+    let obj = {
+      title: title,
+      collects: JSON.stringify(state.collects),
+      id: state.authUser.id
+    };
+    axios.post("/api/chartCreate");
   }
 };
 

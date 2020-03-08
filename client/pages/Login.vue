@@ -32,13 +32,14 @@ export default {
     };
   },
   methods: {
-    async login() {
+    login() {
       myAxios
         .post("/api/login", {
           email: this.email,
           password: this.password
         })
         .then(val => {
+          this.$store.commit("login", val.data);
           this.$router.push(`/${val.data.id}/User`);
           console.log(val.data.id);
           // Cookie.set("jws", val.data.token, { expires: 7 });

@@ -15,6 +15,7 @@
         RESTART
       </button>
     </div>
+    <saveChart />
     <div>
       <client-only>
         <line-chart
@@ -32,7 +33,12 @@
 <script>
 import { mapGetters } from "vuex";
 import _ from "lodash";
+import saveChart from "@/components/saveChart";
+
 export default {
+  components: {
+    saveChart
+  },
   data() {
     return {
       chartOptions: {
