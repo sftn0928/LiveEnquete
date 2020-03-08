@@ -126,6 +126,16 @@ export const getters = {
       })
     };
   },
+  chartDataPie: state => {
+    const data = state.collects;
+    return {
+      labels: data.datasets.map(v => v.label ),
+      datasets: [{
+         data: data.datasets.map(v => v.sum ),
+         backgroundColor: data.datasets.map(v => v.borderColor ),
+      }]
+    }
+  },
   count: state => state.count,
   rateData: state => {
     const data = state.collects;
@@ -178,3 +188,12 @@ export const actions = {
     await axios.post("/session/logout");
   }
 };
+
+// 半角 -> 全角
+
+// function zenkakuHankaku(str) {
+//   return str.replace(/[A-Za-z0-9]/g, function(s) {
+//       return String.fromCharCode(s.charCodeAt(0) + 0xFEE0);
+//   });
+// }
+// console.log(zenkakuHankaku("12zxsDSF"))

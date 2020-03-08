@@ -1,10 +1,11 @@
 <template>
   <div class="result-container">
-    <div v-if="count !== '∞'" class="timer-view">
+    <div class="switching-container">
+      <div v-if="count !== '∞'" class="timer-view">
       {{ time }}
     </div>
-    <div v-if="count === '∞'" class="switching-container">
-      <button
+      <div v-if="count === '∞'">
+        <button
         @click="collectStop"
         v-if="isCollect === false"
         class="switching-button"
@@ -14,74 +15,49 @@
       <button @click="collectRestart" v-if="isCollect" class="switching-button">
         RESTART
       </button>
+      </div>
+      <button @click="switchChart()" v-if="isPieBtn == false" class="switching-button">円グラフ</button>
+      <button @click="switchChart()" v-if="isLineBtn" class="switching-button">折れ線グラフ</button>
     </div>
+    
     <div>
       <client-only>
-        <line-chart
-          :chartData="chartDataLine"
-          :options="chartOptions"
-        ></line-chart>
+        <lineChart
+        :chartData="chartDataLine"
+        v-if="isLine == false" />
+        <pieChart v-if="isPie" />
       </client-only>
     </div>
-    <div v-for="(data, index) in rate" :key="index">
-      {{ data.name }}:{{ data.sum }}
+    <div class="result-table">
+      <div v-for="(data, index) in rate" :key="index" class="result-data">
+      {{ data.name }} : {{ data.sum }}票
       {{ Math.floor((data.sum / (sum || 1)) * 100) }} %
+    </div>
     </div>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
+import pieChart from "~/components/pieChart"
+import lineChart from "~/components/lineChart"
 import _ from "lodash";
 export default {
   data() {
     return {
-      chartOptions: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          labels: {
-            padding: 10,
-            boxWidth: 40,
-            fontSize: 10
-          }
-        },
-        layout: {
-          padding: {
-            left: 50,
-            right: 50,
-            top: 0,
-            bottom: 0
-          }
-        },
-        tooltips: {
-          mode: "index",
-          xPadding: 50
-        },
-        scales: {
-          xAxes: [
-            {
-              ticks: {
-                autoSkip: true,
-                maxTicksLimit: 30 //値の最大表示数
-              }
-            }
-          ],
-          yAxes: [
-            {
-              ticks: {
-                autoSkip: true,
-                maxTicksLimit: 5 //値の最大表示数
-              }
-            }
-          ]
-        }
-      },
+      isPie: false,
+      isLine: false,
+      isPieBtn: false,
+      isLineBtn: false,
       interval: "",
       time: ""
     };
   },
   mounted() {
     this.StartInterval();
+  },
+  components: {
+    pieChart,
+    lineChart
   },
   destroy() {
     clearInterval(this.interval);
@@ -92,8 +68,8 @@ export default {
       count: "count",
       isCollect: "stop",
       rate: "rateData",
-      sum: "sumData"
-    })
+      sum: "sumData",
+    }),
   },
   methods: {
     collectStop() {
@@ -118,26 +94,34 @@ export default {
       this.$store.commit("collectRestart");
       this.StartInterval();
     },
+    switchChart(){
+      this.isPie = !this.isPie;
+      this.isLine = !this.isLine;
+      this.isPieBtn = !this.isPieBtn;
+      this.isLineBtn = !this.isLineBtn;
+    },
+    props: {
+
+    },
     setTime() {}
   }
 };
 </script>
 <style lang="scss">
-.result-container {
+.result-container{
   height: calc(100vh - #{$headerHeight});
 }
-
 .timer-view {
   display: flex;
   justify-content: center;
   font-size: $fontSizeML;
   color: $textColor;
-  margin: 3vh;
+  margin: calc(2vh + 25px) 0 2vh;
 }
 
 .switching-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .switching-button {
@@ -150,16 +134,19 @@ export default {
   border-style: none;
   border-radius: 10px;
   cursor: pointer;
-  margin: 2vh 0;
+  margin: calc(2vh + 25px) 0 2vh;
 }
 
-.chart-card {
-  background: tan;
-  border-radius: 6px;
-  width: 25%;
+.result-table{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.ct-series-a .ct-bar {
-  stroke-width: 50px;
+.result-data{
+  margin: 2em;
+  font-size: 15px;
+  color: $textColor;
 }
+
 </style>

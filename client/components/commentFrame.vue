@@ -53,7 +53,6 @@ export default {
       this.items.push(this.item);
     },
     changeInput(event, index) {
-      console.log(event.target.value);
       this.items.splice(index, 1, event.target.value);
     },
     deleteInput(index) {

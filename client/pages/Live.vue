@@ -5,7 +5,6 @@
   </div>
 </template>
 <script>
-import resultComponent from "~/components/result";
 import collectComponent from "~/components/collectChat";
 import setURLComponent from "~/components/setURL";
 export default {
@@ -26,7 +25,7 @@ export default {
     },
     connect(Id) {
       this.$store.commit("SET_URL", Id);
-    }
+    },
   },
   watch: {
     isSetURL() {
