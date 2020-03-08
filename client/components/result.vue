@@ -108,9 +108,6 @@ export default {
 };
 </script>
 <style lang="scss">
-.result-container{
-  height: calc(100vh - #{$headerHeight});
-}
 .timer-view {
   display: flex;
   justify-content: center;
@@ -144,7 +141,7 @@ export default {
 }
 
 .result-data{
-  margin: 2em;
+  margin: 6vh 2em 10vh;
   font-size: 15px;
   color: $textColor;
 }
